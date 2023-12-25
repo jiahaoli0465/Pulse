@@ -4,7 +4,7 @@ body {
     margin: 0;
     padding: 0;
     background: #333;
-    /* overflow-y: hidden; */
+    overflow-y: hidden;
     overflow-x: hidden;
     width: 100vw;
     height: 100vh;
@@ -17,9 +17,10 @@ nav {
     position: fixed;
     top: 0;
     width: 100vw;
+    height: 52px;
     background-color: #333;
     color: white;
-    padding: 8px 0;
+    padding: 3px 0;
     text-align: right;
 
     /* margin-right: 10px; */
@@ -41,6 +42,11 @@ nav a {
 nav #home {
     position: absolute;
     left: 10px;
+    color: #E37D74;
+    top: 3px;
+    font-weight: 700;
+    font-size: 20px;
+    
 }
 nav a:hover {
     background-color: #ddd;
@@ -82,11 +88,13 @@ nav a:hover {
 
 .page {
     width: 100vw;
-    height: 100vh;    
+
+    height: calc(100vh - 50px);  
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    margin-top: 50px;
 }
 
 .page a {
@@ -96,6 +104,8 @@ nav a:hover {
     border-radius: 10px;
     transition: 0.1s ease-in-out;
     margin-right: 5px;
+
+    
 }
 
 .page a:hover {
@@ -120,7 +130,7 @@ nav a:hover {
     width: 160px;
     height: fit-content;
     right: 5px;
-    top: 52px;
+    top: 43px;
     position: fixed;
     /* background-color: #2b2b2b;  */
     display: flex;

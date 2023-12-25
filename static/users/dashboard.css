@@ -1,6 +1,6 @@
 .user {
-    width: 400px;
-    height: 550px;
+    width: 800px;
+    height: 700px;
     background-color: #2b2b2b; 
     display: flex;
     flex-direction: column;
