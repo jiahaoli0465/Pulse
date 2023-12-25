@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h1>Home????</h1>
 
-    <a href="/form">go to form</a>
+
+    <div class="page">
+        <h1>Home????</h1>
+        {% if current_user.is_authenticated %}
+        Hi {{ current_user.username }}!
+        {% endif %}
+        <!-- {% for user in users %}
+            <p>{{user.username}}</p>
+        {% endfor %} -->
+        <a href="/form">go to form</a>
+    </div>
+
 {% endblock %}

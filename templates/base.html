@@ -13,20 +13,19 @@
 <body>
     <nav>
         <a id="home" href="/">home</a>
-        {% if not session.get('username'):
-        %}
+        {% if not current_user.is_authenticated %}
             <a href="/login">login</a>
             <a href="/register">signup</a>
         {% else %}
 
-            <a id="prof" href="/users/{{session.get('username')}}">  
+            <a id="prof" href="/dashboard">  
                 <span style="z-index: 20; font-size: 20px; color: rgb(234, 234, 234);">
                     <i class="fa-solid fa-user"></i>             
                  </span></i>
             </a>
 
             <div id="menu" class="hidden">
-                <a href="/users/{{session.get('username')}}">profile</a>
+                <a href="/dashboard">profile</a>
                 <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> log out</a>
 
             </div>
