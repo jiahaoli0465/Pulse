@@ -33,14 +33,7 @@ class User(db.Model):
         default="/static/images/default-pic.png",
     )
 
-    header_image_url = db.Column(
-        db.Text,
-        default="/static/images/warbler-hero.jpg"
-    )
 
-    bio = db.Column(
-        db.Text,
-    )
 
     password = db.Column(
         db.Text,
@@ -91,58 +84,44 @@ class User(db.Model):
         return False
 
 
-class Worklog(db.Model):
-    """An individual worklog for a day."""
-
-    __tablename__ = 'Worklogs'
-
-    id = db.Column(
-        db.Integer,
-        primary_key=True,
-    )
-
-    name = db.Column(
-        db.Text,
-        nullable=False,
-    )
-
-        # Relationship to User
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('User', backref='worklogs')
-    
-    # Relationship to ExerciseToWorklog
-    exercises = db.relationship('ExerciseToWorklog', backref='worklog', lazy='dynamic')
-
-class ExerciseSet(db.Model):
-    """A set of exercises."""
-    __tablename__ = 'exerciseSets'
+class WorkoutType(db.Model):
+    __tablename__ = 'workout_types'
 
     id = db.Column(db.Integer, primary_key=True)
-    weight = db.Column(db.Float, nullable=False)
-    reps = db.Column(db.Integer, nullable=False)
-    
-    # Foreign Key to ExerciseToWorklog
-    exercise_to_worklog_id = db.Column(db.Integer, db.ForeignKey('exerciseToWorklog.id'), nullable=False)
+    type_name = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text)
+
+class Worklog(db.Model):
+    __tablename__ = 'worklog'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    workout_type_id = db.Column(db.Integer, db.ForeignKey('workout_types.id'))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    user = db.relationship('User', backref='worklogs')
+    workout_type = db.relationship('WorkoutType', backref='worklogs')
 
 class Exercise(db.Model):
-    """An individual exercise."""
     __tablename__ = 'exercises'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(140), nullable=False)
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.Text)
 
-class ExerciseToWorklog(db.Model):
-    """Relationship between an exercise and a worklog."""
-    __tablename__ = 'exerciseToWorklog'
+class ExerciseSet(db.Model):
+    __tablename__ = 'exercise_sets'
 
     id = db.Column(db.Integer, primary_key=True)
-    worklog_id = db.Column(db.Integer, db.ForeignKey('Worklogs.id'), nullable=False)
+    worklog_id = db.Column(db.Integer, db.ForeignKey('worklog.id'), nullable=False)
     exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
-    
-    # Relationship to ExerciseSet
-    sets = db.relationship('ExerciseSet', backref='exercise_to_worklog', lazy='dynamic')
+    weight = db.Column(db.Float)
+    reps = db.Column(db.Integer)
+    rest_time = db.Column(db.Integer)
 
-
+    worklog = db.relationship('Worklog', backref='exercise_sets')
+    exercise = db.relationship('Exercise', backref='exercise_sets')
 
 
 
