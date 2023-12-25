@@ -27,12 +27,38 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+
+
+@app.route('/')
+def show_home():
+    users = User.query.all()
+    return render_template('home.html', users = users)
+
+@app.route('/form')
+def form_page():
+    return render_template('form_page.html')
+
+@app.route('/dashboard')
+def show_dashboard():
+
+    return render_template('users/dashboard.html')
+
+
+
+
+
+
+
+#####################################################
+# Login/Register for users
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-# Login/Register for users
+
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -72,6 +98,8 @@ def login():
 
         if user:
             login_user(user)
+            flash('Logged in successfully.', category='success')
+            # next = request.args.get('next')
             return redirect("/")
 
         else:
@@ -81,12 +109,15 @@ def login():
 
     else:
         return render_template("users/login.html", form=form)
+    
+@app.route('/logout', methods = ['GET', 'POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
+#End login/ Register Routes
+#####################################################
 
-@app.route('/')
-def show_home():
-    return render_template('home.html')
+    
 
-@app.route('/form')
-def form_page():
-    return render_template('form_page.html')
