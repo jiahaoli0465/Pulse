@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<link rel="stylesheet" href="/static/userForm.css">
+
+<div class="page">
+    <div id="userForms">
+        <div class="ss"> 
+            <form method="POST" class="sign-up-form">
+                <h2 class="title">Login</h2>
+                {{ form.hidden_tag() }}
+            
+                <!-- Displaying Form Errors -->
+                {% for field in form %}
+                    {% if field.errors %}
+                        <div class="alert-bad">
+                            <p>{{ field.label.text }}: 
+                                {% for error in field.errors %}
+                                    <b>{{ error }}</b>
+                                {% endfor %}</p>
+
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            
+
+
+
+            
+                <!-- Username Field -->
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    {{ form.username(placeholder=form.username.label.text, class="form-control") }}
+                </div>
+            
+
+            
+                <!-- Password Field -->
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    {{ form.password(placeholder=form.password.label.text, class="form-control") }}
+                </div>
+            
+                <!-- Submit Button -->
+                <input type="submit" value="Sign up" class="btn">
+            
+                <!-- Additional Links or Text -->
+                <p>Don't have an account? <a href="/register" class="account-text" id="sign-in-link">Sign up</a></p>
+            </form>
+            
+        </div>
+    </div>
+
+
+
+</div>
+
+
+
+
+{% endblock %}
