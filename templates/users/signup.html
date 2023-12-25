@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<link rel="stylesheet" href="/static/userForm.css">
+<link rel="stylesheet" href="/static/users/userForm.css">
 
 <div class="page">
     <div id="userForms">
@@ -29,18 +29,6 @@
                     <i class="fas fa-envelope"></i>
                     {{ form.email(placeholder=form.email.label.text, class="form-control") }}
                 </div>
-
-                <div class="input-row">
-                    <div class="input-field">
-
-                        {{ form.first_name(placeholder=form.first_name.label.text, class="form-control") }}
-                    </div>
-                    <div class="input-field">
-                        <!-- <i class="fas fa-user"></i> -->
-                        {{ form.last_name(placeholder=form.last_name.label.text, class="form-control") }}
-                    </div>
-                </div>
-
 
             
                 <!-- Username Field -->

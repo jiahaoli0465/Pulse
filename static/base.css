@@ -1,0 +1,140 @@
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #333;
+    /* overflow-y: hidden; */
+    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+
+
+}
+
+/* Navbar styling */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    background-color: #333;
+    color: white;
+    padding: 8px 0;
+    text-align: right;
+
+    /* margin-right: 10px; */
+    padding-inline-end: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    max-height: 15vh;
+}
+
+nav a {
+    color: white;
+    padding: 14px 20px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    transition: 0.1s ease-in-out;
+    margin-right: 5px;
+}
+
+nav #home {
+    position: absolute;
+    left: 10px;
+}
+nav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Container */
+.flashMsg {
+    padding: 20px;
+    width: 50vw;  
+    position: fixed;
+    top: 100px;    
+    left: 50%;   
+    transform: translate(-50%, -50%); 
+    text-align: center;
+}
+
+
+.alert {
+    padding: 10px;
+
+    color: white;
+    margin-bottom: 15px;
+    background-color: #3c2121; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+}
+
+.success {
+    padding: 10px;
+    background-color: #34b5c8; 
+    color: white;
+    margin-bottom: 15px;
+
+}
+
+
+
+
+.page {
+    width: 100vw;
+    height: 100vh;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.page a {
+    color: rgb(92, 148, 186);
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+    transition: 0.1s ease-in-out;
+    margin-right: 5px;
+}
+
+.page a:hover {
+    color:rgb(63, 81, 114);
+
+}
+
+#welcome h1{
+    color: aquamarine;
+    font-size: 80px;
+}
+#welcome p {
+    color: #ddd;
+    font-size: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#menu {
+    width: 160px;
+    height: fit-content;
+    right: 5px;
+    top: 52px;
+    position: fixed;
+    /* background-color: #2b2b2b;  */
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+    border-radius: 2px; 
+    box-shadow: 0 2px 15px rgba(0,0,0,0.4); 
+    margin: 20px auto; 
+    color: rgb(214, 227, 239);
+    z-index: 20;
+    text-align: left;
+}
+
+#menu a {
+    border-radius: 0;
+}
+
