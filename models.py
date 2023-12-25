@@ -1,12 +1,14 @@
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     """User in the system."""
 
     __tablename__ = 'users'
@@ -28,11 +30,6 @@ class User(db.Model):
         unique=True,
     )
 
-    image_url = db.Column(
-        db.Text,
-        default="/static/images/default-pic.png",
-    )
-
 
 
     password = db.Column(
@@ -44,7 +41,7 @@ class User(db.Model):
 
 
     @classmethod
-    def signup(cls, username, email, password, image_url):
+    def signup(cls, username, email, password):
         """Sign up user.
 
         Hashes password and adds user to system.
