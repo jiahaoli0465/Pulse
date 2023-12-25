@@ -22,5 +22,8 @@ connect_db(app)
 
 @app.route('/')
 def show_home():
-
     return render_template('home.html')
+
+@app.route('/form')
+def form_page():
+    return render_template('form_page.html')
