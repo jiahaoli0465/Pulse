@@ -3,16 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/static/base.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    {% block head %}{% endblock %}
+
 </head>
+
 <body>
+    <nav>
+        <a id="home" href="/">home</a>
+        {% if not session.get('username'):
+        %}
+            <a href="/login">login</a>
+            <a href="/register">signup</a>
+        {% else %}
+
+            <a id="prof" href="/users/{{session.get('username')}}">  
+                <span style="z-index: 20; font-size: 20px; color: rgb(234, 234, 234);">
+                    <i class="fa-solid fa-user"></i>             
+                 </span></i>
+            </a>
+
+            <div id="menu" class="hidden">
+                <a href="/users/{{session.get('username')}}">profile</a>
+                <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> log out</a>
+
+            </div>
+
+
+        {% endif %}
+    </nav>
     
+    <div class="flashMsg">
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <div class="{{ category }}">{{ message }}</div>
+    {% endfor %}
+    
+    </div>
 
-    {% block content %}
-    {% endblock %}
-
-
-
-
+      {% block content %}
+      {% endblock %}
 </body>
+<script>
+    const profile = document.querySelector('#prof');
+    const menu = document.querySelector('#menu');
+    let menuTimeout;
+
+    profile.addEventListener('mouseover', () => {
+        clearTimeout(menuTimeout);  // Clear any existing timeout
+        menu.classList.remove('hidden');
+    });
+
+    profile.addEventListener('mouseleave', () => {
+        // Start a timeout when leaving the profile link
+        menuTimeout = setTimeout(() => {
+            menu.classList.add('hidden');
+        }, 300); // 300 milliseconds delay
+    });
+
+    menu.addEventListener('mouseover', () => {
+        clearTimeout(menuTimeout);  // Cancel hiding when over the menu
+    });
+
+    menu.addEventListener('mouseleave', () => {
+        // Hide the menu after leaving it
+        menuTimeout = setTimeout(() => {
+            menu.classList.add('hidden');
+        }, 300);
+    });
+</script>
+
 </html>
+
