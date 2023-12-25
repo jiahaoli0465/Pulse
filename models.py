@@ -88,7 +88,7 @@ class WorkoutType(db.Model):
     description = db.Column(db.Text)
 
 class Worklog(db.Model):
-    __tablename__ = 'worklog'
+    __tablename__ = 'worklogs'
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)

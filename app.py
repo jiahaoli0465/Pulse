@@ -5,8 +5,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
-from forms import RegisterForm, LoginForm
-from models import db, connect_db, User
+from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
+from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet
 
 app = Flask(__name__)
 
@@ -40,9 +40,28 @@ def form_page():
     return render_template('form_page.html')
 
 @app.route('/dashboard')
+@login_required
 def show_dashboard():
-
+    worklogs = Worklog.query.filter_by()
     return render_template('users/dashboard.html')
+
+
+
+
+
+@app.route('/edit_worklog/<int:worklog_id>', methods=['GET', 'POST'])
+def edit_worklog(worklog_id):
+    form = EditWorkLog()
+    
+    # Populate existing exercises
+    exercises = Exercise.query.all() #add filter for specific workout type
+    form.existing_exercise.choices = [(e.id, e.name) for e in exercises]
+
+    if form.validate_on_submit():
+        # Process the form data
+        pass
+
+    return render_template('edit_worklog.html', form=form)
 
 
 
