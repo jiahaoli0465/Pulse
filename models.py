@@ -110,8 +110,8 @@ class ExerciseSet(db.Model):
     __tablename__ = 'exercise_sets'
 
     id = db.Column(db.Integer, primary_key=True)
-    worklog_id = db.Column(db.Integer, db.ForeignKey('worklog.id'), nullable=False)
-    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
+    worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), nullable=False)  
+    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)  
     weight = db.Column(db.Float)
     reps = db.Column(db.Integer)
     rest_time = db.Column(db.Integer)
