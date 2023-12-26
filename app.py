@@ -39,11 +39,29 @@ def show_home():
 def form_page():
     return render_template('form_page.html')
 
-@app.route('/dashboard')
+@app.route('/dashboard', methods = ['GET', 'POST'])
 @login_required
 def show_dashboard():
-    worklogs = Worklog.query.filter_by()
-    return render_template('users/dashboard.html')
+    worklogs = Worklog.query.all()
+    form = NewWorkLog()
+
+
+    if form.validate_on_submit():
+        title = form.title.data
+
+        worklog = Worklog(title = title, user_id = current_user.id)
+        db.session.add(worklog)
+        db.session.commit()
+
+        return redirect(url_for('show_dashboard'))
+
+
+
+    else:
+        return render_template('users/dashboard.html', form = form, worklogs = worklogs)
+
+
+    
 
 
 
