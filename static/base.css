@@ -3,7 +3,7 @@ body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background: #333;
+    background: #232323;
     overflow-y: hidden;
     overflow-x: hidden;
     width: 100vw;
@@ -18,7 +18,7 @@ nav {
     top: 0;
     width: 100vw;
     height: 52px;
-    background-color: #333;
+    background-color: #232323;
     color: white;
     padding: 3px 0;
     text-align: right;
@@ -46,11 +46,13 @@ nav #home {
     top: 3px;
     font-weight: 700;
     font-size: 20px;
+
     
 }
 nav a:hover {
     background-color: #ddd;
     color: black;
+
 }
 
 /* Container */
@@ -94,8 +96,8 @@ nav a:hover {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    /* margin-top: 50px; */
-    transform: translateY(50px);
+    margin-top: 50px;
+    /* transform: translateY(50px); */
 }
 
 .page a {
@@ -106,6 +108,7 @@ nav a:hover {
     transition: 0.1s ease-in-out;
     margin-right: 5px;
     overflow-y: scroll;
+    z-index: 1;
 
     
 }
@@ -128,13 +131,13 @@ nav a:hover {
     display: none !important;
 }
 
-#menu {
+#menu  {
     width: 160px;
     height: fit-content;
     right: 5px;
     top: 43px;
     position: fixed;
-    /* background-color: #2b2b2b;  */
+    background-color: #232323;
     display: flex;
     flex-direction: column;
     justify-content: left;
@@ -143,7 +146,7 @@ nav a:hover {
     box-shadow: 0 2px 15px rgba(0,0,0,0.4); 
     margin: 20px auto; 
     color: rgb(214, 227, 239);
-    z-index: 20;
+
     text-align: left;
 }
 
