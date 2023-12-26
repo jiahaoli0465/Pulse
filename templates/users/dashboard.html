@@ -2,26 +2,42 @@
 {% block content %}
 
 <div class="page">
+    <div class="container">
+        <div id="profile">
+            <div id="profile-img">
+                <img src="{{current_user.image_url}}" alt="profile image for user">
+            </div>
+            <div class="user-info">
+                <h3>Temp Name</h3>
+                <h4>{{current_user.username}}</h4>
 
-<div id="profile">
-    <div id="profile-img">
-        <img src="{{current_user.image_url}}" alt="profile image for user">
+                <p>Temporary short bio</p>
+            </div>
+            <button id="editProfile">Edit profile</button>
+
+            <div class="user-follow">
+                <p>(icon) #<a href="">followers</a> # <a href="">following</a></p>
+            </div>
+
+        </div>
+
+
+        <div id="dashboard">
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
     </div>
-    <div class="user-info">
-        <h3>Temp Name</h3>
-        <h4>{{current_user.username}}</h4>
-
-        <p>Temporary short bio</p>
-    </div>
-    <button id="editProfile">Edit profile</button>
-
-    <div class="user-follow">
-        <p>(icon) #<a href="">followers</a> # <a href="">following</a></p>
-    </div>
-
-</div>
-
-<div></div>
 
 
 

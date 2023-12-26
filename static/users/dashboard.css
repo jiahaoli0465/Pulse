@@ -4,6 +4,7 @@
     border: 2px solid #2b2b2b;
     display: flex;
     flex-direction: column;
+    margin: 10px;
     /* justify-content: center; */
     /* align-items: center; */
 }
@@ -67,17 +68,19 @@
     transform: translateY(-2px); /* Subtle lift effect on hover */
 }
 
-.dash-page{
-    margin-top: 50px;
-
-    width: 100vw;
-
-    height: calc(100vh - 50px);  
+.container {
+    width: 85vw;
     display: flex;
+    flex-direction: row;
+    margin-top: 40px;
 
+}
 
-
-
+#dashboard {
+    border: 2px solid #2b2b2b;
+    width: 1000px;
+    height: 700px;
+    margin: 10px;
 }
 
 
