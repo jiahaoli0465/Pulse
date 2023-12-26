@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(removeFlashMessages, flashDurationInSeconds * 1000);
 });
 
-const profile = document.querySelector('#prof');
+const profile = document.querySelector('#navProfile');
 const menu = document.querySelector('#menu');
 let menuTimeout;
 
