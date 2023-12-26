@@ -107,7 +107,7 @@ class Exercise(db.Model):
     __tablename__ = 'exercises'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique = True)
     description = db.Column(db.Text)
 
 class ExerciseSet(db.Model):

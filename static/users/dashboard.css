@@ -35,17 +35,24 @@
 
 .user-info h3 {
     color: azure;
-    margin: 0;
+    margin: 3px;
+    margin-bottom: 6px;
 }
 
 .user-info h4 {
     color: rgb(178, 189, 189);
-    margin: 0;
+    margin: 3px;
+    margin-bottom: 6px;
+
 
 }
 
 .user-info p {
     color: rgb(224, 240, 240);
+    margin: 3px;
+    margin-bottom: 6px;
+
+
 }
 
 #editProfile {
@@ -61,6 +68,8 @@
     transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
     border-radius: 5px; /* Slightly rounded corners */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    margin-block: 8px;
+    margin-inline: 3px;
 }
 
 #editProfile:hover {
@@ -85,9 +94,37 @@
 }
 
 
+#worklogs {
+    height: 600px;
+    border-bottom: 2px solid #999;
+    margin: 10px;
 
+}
 
+#wl-header {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    margin: 10px;
+    border-bottom: 2px solid #999;
 
+}
+
+#wl-btn {
+    background-color: coral;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    margin: 10px;
+    transition: 0.2s ease-in-out;
+    margin-inline: 15px;
+}
+#wl-btn:hover {
+    background-color: rgb(255, 100, 80);
+
+}
 
 
 

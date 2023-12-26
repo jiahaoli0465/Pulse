@@ -21,6 +21,10 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[InputRequired()])
 
 
+
+
+
+
 class NewWorkType(FlaskForm):
      """Form for creating new type of workout"""
 
@@ -33,10 +37,28 @@ class NewExercise(FlaskForm):
      name = StringField("Type", validators=[InputRequired()])
      description = TextAreaField('Mailing Address', [validators.optional(), validators.length(max=200)])
 
-class NewWorkLog(FlaskForm):
-     """Form for creating new worklog"""
 
-     title = StringField("Type", validators=[InputRequired()])
+
+
+class NewWorkLog(FlaskForm):
+    """Form for creating a new worklog."""
+
+    title = StringField("Title", validators=[InputRequired()])
+    workout_type = SelectField("Workout Type", choices=[], coerce=int)
+
+    def __init__(self, *args, **kwargs):
+        super(NewWorkLog, self).__init__(*args, **kwargs)
+        self.workout_type.choices = self.load_workout_types()
+
+    @staticmethod
+    def load_workout_types():
+        """
+        Load workout types from the database and add an option
+        for adding a new type.
+        """
+        workout_types = [(wt.id, wt.type_name) for wt in WorkoutType.query.all()]
+        workout_types.append((0, "Add New Workout Type"))
+        return workout_types
 
 
 
