@@ -3,22 +3,66 @@
 
 <div class="page">
 
-    <div class="user">
-        <h1>{{ current_user.username }}</h1>
+<div id="profile">
+    <div id="profile-img">
+        <img src="{{current_user.image_url}}" alt="profile image for user">
+    </div>
+    <div class="user-info">
+        <h3>Temp Name</h3>
+        <h4>{{current_user.username}}</h4>
 
-        <div id="userContent">
+        <p>Temporary short bio</p>
+    </div>
+    <button id="editProfile">Edit profile</button>
 
-            <p>Email: {{ current_user.email }}</p>
-
-        </div>
-        <button id="deleteUserBtn" data-username="{{ current_user.username }}">Delete Account</button>
-
+    <div class="user-follow">
+        <p>(icon) #<a href="">followers</a> # <a href="">following</a></p>
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<div></div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
+
+    function newExercise(e) {
+        e.preventDefault();
+        let id = this.attr("data-id");
+
+
+        
+
+    }
+
+    async function makeNewExercise(){
+        
+    }
+
+
+
+
     document.getElementById('deleteUserBtn').addEventListener('click', function() {
         const username = this.dataset.username;
         if (!username) {

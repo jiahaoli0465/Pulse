@@ -37,6 +37,10 @@ class User(db.Model, UserMixin):
         nullable=False,
     )
 
+    image_url = db.Column(
+        db.Text,
+        default="/static/images/defaultPic.png",
+    )
 
 
 
