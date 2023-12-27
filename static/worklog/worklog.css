@@ -151,7 +151,7 @@ input:hover {
 }
 
 
-.logs-container {
+.logsContainer {
     /* background-color: blue; */
     height: 550px;
     width: 470px;
@@ -231,4 +231,23 @@ input:hover {
 
 .btns .dlt:hover {
     background-color: #a12424; /* Darker red */
+}
+
+.set p {
+
+    margin-block: 5px;
+    margin-left: 5px;
+    color: #c3c3c3;
+}
+
+.set {
+    margin-block: 0;
+    font-size: 15px;
+    border-bottom: 1px solid #202020;
+    box-shadow: 0 0 7px rgba(0,0,0,0.2); 
+    justify-content: center;
+
+    padding-block: 2px;
+
+
 }
