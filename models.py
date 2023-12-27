@@ -101,6 +101,7 @@ class Worklog(db.Model):
 
     user = db.relationship('User', backref='worklogs')
     workout_type = db.relationship('WorkoutType', backref='worklogs')
+    
 
 class Exercise(db.Model):
     __tablename__ = 'exercises'

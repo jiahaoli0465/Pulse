@@ -27,6 +27,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
+#Use the database jeff so u dont have to looool
+
 # # i dont wanna keep making a new account every time i change an html page
 # def autosignup():
 #     User.signup(
@@ -84,19 +87,33 @@ def edit_worklog(worklog_id):
 
     return render_template('edit_worklog.html', form=form)
 
-@app.route('/worklog/new', methods=['GET', 'POST'])
+@app.route('/worklogs/new', methods=['GET', 'POST'])
 def new_worklog():
     form = NewWorkLog()
     
     # add logic for recommended exercises based on exercise type
-    if(request.method == 'POST'):
-        print("REQUEST POST FOR NEW WORKLOG")
-        workouts = []
+    if form.validate_on_submit():
+        title = form.title.data
+        
+        # workout_type= dict(form.workout_type.choices).get(form.workout_type.data)
+        # type_id = form.workout_type.data
 
-        return "SOME WACKY RESPONSE PREFERABLY OF A LIST OF WORKOUTS"
+        workout_type_id = form.workout_type.data
+        user_id = current_user.id 
+
+
+        new_wl = Worklog(title = title, workout_type_id = workout_type_id, user_id = user_id)
+        db.session.add(new_wl)
+        db.session.commit()
+        return redirect(url_for('make_worklog', wk_id = new_wl.id))
 
     return render_template('worklog/newlog.html', form=form)
 
+@app.route('/worklog/<int:wk_id>')
+def make_worklog(wk_id):
+    worklog = Worklog.query.get_or_404(wk_id)
+
+    return render_template('worklog/worklog.html', worklog = worklog)
 
 #####################################################
 # Login/Register for users

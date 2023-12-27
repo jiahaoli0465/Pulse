@@ -4,6 +4,11 @@ const workoutTypeSelect = document.getElementById("workout_type")
 
 workoutTypeSelect.addEventListener("input", updateWorkoutType)
 
+const newTypeBtn = document.querySelector('#newTypeBtn')
+newTypeBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+})
+
 function updateWorkoutType(){
     console.log("type changed")
     const options = {
