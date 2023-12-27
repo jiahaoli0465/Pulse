@@ -30,6 +30,10 @@ function updateWorkoutType(){
     })
     .then((data) => {
         console.log(data)
+        // here you would add something that handles the data from a json preferably but there's nothing here so have a skeleton instead
+        for(let thing in data){
+            //document.getElementById("container for workouts").innerHtml+= "<PUT HTML HERE>"
+        }
     })
 
 }
