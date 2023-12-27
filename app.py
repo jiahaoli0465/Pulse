@@ -109,16 +109,37 @@ def new_worklog():
 
     return render_template('worklog/newlog.html', form=form)
 
-@app.route('/worklog/<int:wk_id>', methods=['GET', 'POST'])
+@app.route('/worklog/<int:wk_id>')
 def make_worklog(wk_id):
     worklog = Worklog.query.get_or_404(wk_id)
-    print(request.method)
-    if(request.method == "POST"):
-        print("request gotten")
-        #do stuff here
+
+
 
     return render_template('worklog/worklog.html', worklog = worklog)
 
+@app.route('/worklog/<int:wk_id>/exercise', methods = ['POST'])
+def add_excercise(wk_id):
+    return
+
+@app.route('/worklog/<int:wk_id>/exercise', methods = ['PATCH'])
+def edit_excercise(wk_id):
+    return
+
+@app.route('/worklog/<int:wk_id>/exercise', methods = ['DELETE'])
+def delete_excercise(wk_id):
+    return
+
+@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['POST'])
+def add_set(wk_id):
+    return
+
+@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['PATCH'])
+def edit_set(wk_id):
+    return
+
+@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['DELETE'])
+def delete_set(wk_id):
+    return
 
 #####################################################
 # Login/Register for users
