@@ -38,13 +38,13 @@
 }
 #newExercise-btn {
     width: 110px;
-    height: 50px;
+    height: 40px;
     border-radius: 5px;
     background-color: rgb(235, 117, 74); /* Blue color */
     border: none;
     color: azure;
     transition: 0.2s ease-in-out;
-    transform: translateY(30px);
+    transform: translateY(50px);
     box-shadow: 0 0 5px rgba(0,0,0,0.2); 
     cursor: pointer;
 
