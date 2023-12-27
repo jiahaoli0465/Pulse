@@ -74,25 +74,11 @@ document.addEventListener('DOMContentLoaded', async function() {
         logsContainer.appendChild(tempDiv.firstChild);
         addExerciseDiv.classList.add('hidden');
 
-        //use this function to send the new exercise to the database
+
         sendNewExerciseRequest(exerciseName)
 
-        // if(logsContainer) {
-        //     logsContainer.appendChild(tempDiv.firstChild);
-        // } else {
-        //     console.error('logsContainer is null');
-        // }
     });
-    // const dlts = document.querySelectorAll('.dlt')
-    // dlts.forEach(d => d.addEventListener('click', function(){
-    //     dlts.forEach(d => d.addEventListener('click', function() {
 
-    //         if (confirm('Are you sure you want to delete this?')) {
-
-    //             this.parentElement.parentElement.parentElement.parentElement.remove();
-    //         }
-    //     }));
-    // }));
 
 
 
