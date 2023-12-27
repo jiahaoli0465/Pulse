@@ -3,22 +3,44 @@
 
 
 <div class="page">
+    <form method="POST" class="sign-up-form">
+        <h2 class="title">new worklog</h2>
+        {{ form.hidden_tag() }}
+    
+        <!-- Displaying Form Errors -->
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="alert-bad">
+                    <p>{{ field.label.text }}: 
+                        {% for error in field.errors %}
+                            <b>{{ error }}</b>
+                        {% endfor %}</p>
 
-    <form action="">
-
-
-        
+                </div>
+            {% endif %}
+        {% endfor %}
+    
+        <!-- worklog title -->
+        <div class="input-field">
+            <i class="fas fa-user"></i>
+            {{ form.title(placeholder=form.title.label.text, class="form-control") }}
+        </div>
+        <!-- workout type Field -->
+        <div class="input-field">
+            <i class="fas fa-lock"></i>
+            
+            <!-- fix this placeholder -->
+            {{ form.workout_type(placeholder="Add Workout Type", class="form-control") }}
+        </div>
+    
+        <!-- Submit Button -->
+        <input type="submit" value="Add new worklog" class="btn">
     </form>
-
-
-
-
-
 </div>
 
 
 
-<!-- <script src="/static/users/dashboard.js"></script>  -->
+<script src="/static/worklog/newlog.js"></script> 
 {% endblock %}
 
 {% block head %}
