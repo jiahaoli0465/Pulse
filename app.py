@@ -109,11 +109,16 @@ def new_worklog():
 
     return render_template('worklog/newlog.html', form=form)
 
-@app.route('/worklog/<int:wk_id>')
+@app.route('/worklog/<int:wk_id>', methods=['GET', 'POST'])
 def make_worklog(wk_id):
     worklog = Worklog.query.get_or_404(wk_id)
+    print(request.method)
+    if(request.method == "POST"):
+        print("request gotten")
+        #do stuff here
 
     return render_template('worklog/worklog.html', worklog = worklog)
+
 
 #####################################################
 # Login/Register for users

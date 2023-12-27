@@ -5,9 +5,42 @@ const exitCreate = document.querySelector('#exitCreate');
 
 let logsContainer = document.querySelector('.logsContainer'); 
     
+async function sendNewExerciseRequest(exerciseName){
 
+    console.log(`send ${exerciseName}`)
+    const options = {
+        method:"POST", 
 
-document.addEventListener('DOMContentLoaded', function() { 
+        body:JSON.stringify({
+            exerciseName:exerciseName
+        }), 
+
+        headers: {'Content-type': 'application/json; charset=UTF-8'}
+    }
+    
+    const url = "";
+    const request = new Request(url, options)
+
+    await fetch(request)
+    .then((response) => {
+        if(response.ok){
+            console.log("Request successful")
+
+            return response.text()
+        } else {
+            throw new Error(`something bad happened: ${response.status}`);
+        }
+    })
+    .then((data) => {
+        console.log(data)
+        // here you would add something that handles the data from a json preferably but there's nothing here so have a skeleton instead
+        for(let thing in data){
+            //document.getElementById("container for workouts").innerHtml+= "<PUT HTML HERE>"
+        }
+    })
+}
+
+document.addEventListener('DOMContentLoaded', async function() { 
         
     newExerciseBtn.addEventListener('click', function(){
         addExerciseDiv.classList.remove('hidden');
@@ -41,6 +74,9 @@ document.addEventListener('DOMContentLoaded', function() {
         logsContainer.appendChild(tempDiv.firstChild);
         addExerciseDiv.classList.add('hidden');
 
+        //use this function to send the new exercise to the database
+        sendNewExerciseRequest(exerciseName)
+
         // if(logsContainer) {
         //     logsContainer.appendChild(tempDiv.firstChild);
         // } else {
@@ -70,9 +106,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 });
-
-
-
-
-
 });
