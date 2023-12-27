@@ -10,8 +10,8 @@ from models import db, connect_db, User, Worklog, WorkoutType, Exercise, Exercis
 
 app = Flask(__name__)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = (
-#     os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (
+    os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
@@ -27,21 +27,21 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# i dont wanna keep making a new account every time i change an html page
-def autosignup():
-    User.signup(
-                username="a",
-                password="a",
-                email="a@a.com",
-    )
-    db.session.commit()
-autosignup()
+# # i dont wanna keep making a new account every time i change an html page
+# def autosignup():
+#     User.signup(
+#                 username="a",
+#                 password="a",
+#                 email="a@a.com",
+#     )
+#     db.session.commit()
+# autosignup()
 
-#i also cant be bothered to add workout types manually
-def autoworkoutType():
-    db.session.add(WorkoutType(id=0, type_name="new awesome workout type"))
-    db.session.commit()
-autoworkoutType()
+# #i also cant be bothered to add workout types manually
+# def autoworkoutType():
+#     db.session.add(WorkoutType(id=0, type_name="new awesome workout type"))
+#     db.session.commit()
+# autoworkoutType()
 
 
 @app.route('/')
