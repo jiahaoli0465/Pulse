@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page">
+
+    <div class="worklog-container">
+        <div id="wl-header">
+            <div id="wk-titles">
+                <h2>{{worklog.title}}</h2>
+                <h3>Type: {{worklog.workout_type.type_name}}</h3>
+            </div>
+            <button id="newExercise-btn">Add Exercise</button>
+            
+        </div>
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+<script src="/static/worklog/worklog.js"></script> 
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/worklog/worklog.css">
+{% endblock %}

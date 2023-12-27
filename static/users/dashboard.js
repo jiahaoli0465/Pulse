@@ -1,5 +1,5 @@
 console.log("update")
 
 function newWL(){
-    window.location.href = '/worklog/new'
+    window.location.href = '/worklogs/new'
 }

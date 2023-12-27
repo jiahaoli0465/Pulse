@@ -3,39 +3,51 @@
 
 
 <div class="page">
-    <form method="POST" class="sign-up-form">
-        <h2 class="title">new worklog</h2>
-        {{ form.hidden_tag() }}
-    
-        <!-- Displaying Form Errors -->
-        {% for field in form %}
-            {% if field.errors %}
-                <div class="alert-bad">
-                    <p>{{ field.label.text }}: 
-                        {% for error in field.errors %}
-                            <b>{{ error }}</b>
-                        {% endfor %}</p>
 
+
+    <div class="container">
+        <form method="POST" class="sign-up-form">
+            <h2 class="title">New Worklog</h2>
+            {{ form.hidden_tag() }}
+        
+            <!-- Displaying Form Errors -->
+            {% for field in form %}
+                {% if field.errors %}
+                    <div class="alert-bad">
+                        <p>{{ field.label.text }}: 
+                            {% for error in field.errors %}
+                                <b>{{ error }}</b>
+                            {% endfor %}</p>
+
+                    </div>
+                {% endif %}
+            {% endfor %}
+        
+            <!-- worklog title -->
+            <div class="input-field">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(placeholder='ex: Chest focus', class="form-control") }}
+            </div>
+
+            <div id="wk-type">
+                
+
+                <div class="input-field">
+                    {{ form.workout_type.label(class="form-label") }}
+                    {{ form.workout_type(class="form-control") }}
                 </div>
-            {% endif %}
-        {% endfor %}
-    
-        <!-- worklog title -->
-        <div class="input-field">
-            <i class="fas fa-user"></i>
-            {{ form.title(placeholder=form.title.label.text, class="form-control") }}
-        </div>
-        <!-- workout type Field -->
-        <div class="input-field">
-            <i class="fas fa-lock"></i>
-            
-            <!-- fix this placeholder -->
-            {{ form.workout_type(placeholder="Add Workout Type", class="form-control") }}
-        </div>
-    
-        <!-- Submit Button -->
-        <input type="submit" value="Add new worklog" class="btn">
-    </form>
+                <button id="newTypeBtn">+</button>
+            </div>
+
+        
+            <!-- Submit Button -->
+            <input type="submit" value="Add new worklog" class="btn">
+        </form>
+
+
+    </div>
+
+
 </div>
 
 
@@ -44,5 +56,5 @@
 {% endblock %}
 
 {% block head %}
-<!-- <link rel="stylesheet" href="/static/users/dashboard.css"> -->
+<link rel="stylesheet" href="/static/worklog/newlog.css">
 {% endblock %}
