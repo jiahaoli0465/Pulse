@@ -10,8 +10,8 @@ from models import db, connect_db, User, Worklog, WorkoutType, Exercise, Exercis
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (
-    os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
+# app.config['SQLALCHEMY_DATABASE_URI'] = (
+#     os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
@@ -27,7 +27,21 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+# i dont wanna keep making a new account every time i change an html page
+def autosignup():
+    User.signup(
+                username="a",
+                password="a",
+                email="a@a.com",
+    )
+    db.session.commit()
+autosignup()
 
+#i also cant be bothered to add workout types manually
+def autoworkoutType():
+    db.session.add(WorkoutType(id=0, type_name="new awesome workout type"))
+    db.session.commit()
+autoworkoutType()
 
 
 @app.route('/')
@@ -45,7 +59,6 @@ def show_dashboard():
     worklogs = Worklog.query.all()
     form = NewWorkLog()
 
-
     if form.validate_on_submit():
         title = form.title.data
 
@@ -54,18 +67,8 @@ def show_dashboard():
         db.session.commit()
 
         return redirect(url_for('show_dashboard'))
-
-
-
     else:
         return render_template('users/dashboard.html', form = form, worklogs = worklogs)
-
-
-    
-
-
-
-
 
 @app.route('/edit_worklog/<int:worklog_id>', methods=['GET', 'POST'])
 def edit_worklog(worklog_id):
@@ -81,10 +84,18 @@ def edit_worklog(worklog_id):
 
     return render_template('edit_worklog.html', form=form)
 
+@app.route('/worklog/new', methods=['GET', 'POST'])
+def new_worklog():
+    form = NewWorkLog()
+    
+    # add logic for recommended exercises based on exercise type
+    if(request.method == 'POST'):
+        print("REQUEST POST FOR NEW WORKLOG")
+        workouts = []
 
+        return "SOME WACKY RESPONSE PREFERABLY OF A LIST OF WORKOUTS"
 
-
-
+    return render_template('worklog/newlog.html', form=form)
 
 
 #####################################################
@@ -93,8 +104,6 @@ def edit_worklog(worklog_id):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
-
-
 
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
@@ -124,7 +133,6 @@ def register():
     
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
-    
     form = LoginForm()
 
     if form.validate_on_submit():
@@ -142,7 +150,6 @@ def login():
         else:
             form.username.errors = ["Invalid input"]
             return render_template("users/login.html", form=form)
-
 
     else:
         return render_template("users/login.html", form=form)

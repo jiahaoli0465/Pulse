@@ -6,8 +6,6 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 bcrypt = Bcrypt()
 db = SQLAlchemy()
 
-
-
 class User(db.Model, UserMixin):
     """User in the system."""
 
@@ -90,6 +88,7 @@ class WorkoutType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type_name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
+    
 
 class Worklog(db.Model):
     __tablename__ = 'worklogs'

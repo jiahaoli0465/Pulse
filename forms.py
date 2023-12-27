@@ -1,8 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, EmailField, TextAreaField, validators,  SelectField, FormField, IntegerField, FloatField
+from wtforms import StringField, PasswordField, EmailField, TextAreaField, validators, SelectField, FormField, IntegerField, FloatField
 from wtforms.validators import InputRequired, Email, Optional, Length
-
-
+from models import WorkoutType
 
 class RegisterForm(FlaskForm):
     """Form for registering a user."""
@@ -20,11 +19,6 @@ class LoginForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired()])
 
-
-
-
-
-
 class NewWorkType(FlaskForm):
      """Form for creating new type of workout"""
 
@@ -36,9 +30,6 @@ class NewExercise(FlaskForm):
 
      name = StringField("Type", validators=[InputRequired()])
      description = TextAreaField('Mailing Address', [validators.optional(), validators.length(max=200)])
-
-
-
 
 class NewWorkLog(FlaskForm):
     """Form for creating a new worklog."""
@@ -59,10 +50,6 @@ class NewWorkLog(FlaskForm):
         workout_types = [(wt.id, wt.type_name) for wt in WorkoutType.query.all()]
         workout_types.append((0, "Add New Workout Type"))
         return workout_types
-
-
-
-
 
 class NewExerciseForm(FlaskForm):
     """Sub-form for creating a new exercise within the worklog edit form."""
