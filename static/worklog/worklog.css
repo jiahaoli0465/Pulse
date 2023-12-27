@@ -2,10 +2,11 @@
     display: flex;
     width: 500px;
     height: 700px;
-    border: 1px solid grey;
+    /* border: 1px solid grey; */
 
     border: 1px solid #5c5c5c;
     box-shadow: 0 0 5px rgba(0,0,0,0.2); 
+    flex-direction: column;
 }
 
 #wl-header {
@@ -13,7 +14,7 @@
     /* margin-block: 8px; */
     margin-top: 20px;
     border-bottom: 2px solid #999;
-    width: 100%;
+    width: 92%;
     height: 100px;
     display: flex;
     flex-direction: row;
@@ -67,7 +68,7 @@
     border: 1px solid grey;
     font-size: 25px;
     font-weight: 530;
-
+    background-color: #202020;
     
 }
 #newExerciseFormDiv form {
@@ -147,4 +148,87 @@ input:hover {
     background-color: rgb(254, 144, 144);
 
 
+}
+
+
+.logs-container {
+    /* background-color: blue; */
+    height: 550px;
+    width: 470px;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    flex-shrink: 0;
+    flex-grow: 0;
+    /* overflow: hidden; */
+    box-sizing: border-box;
+    align-content: flex-start; /* Aligns wrapped lines at the start of the container */
+    justify-content: center;
+    transform: translateY(-2px);
+
+}
+
+.log {
+    /* background-color: paleturquoise;s */
+    width: 225px;
+    height: 180px;
+    margin-inline: 2px;
+    margin-block: 2px;
+    border: 1px solid #5c5c5c;
+    box-shadow: 0 0 4px rgba(0,0,0,0.2); 
+
+
+}
+.log h4{
+    margin: 0;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.log-container {
+    /* background-color: blue; */
+    margin-inline: 7.5px;
+    margin-block: 2.5px;
+    width: 210px;
+    height: 175px;
+
+
+}
+.log-title {
+    border-bottom: 1px solid #999;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+}
+
+.btns button {
+    /* padding: 5px 10px; */
+    /* margin-inline: 5px; */
+    margin-left: 5px;
+    border: none;
+    border-radius: 1px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    /* Additional styling for buttons */
+    text-align: center;
+}
+
+.btns .add {
+    background-color: #4CAF50; /* Green */
+    background-color: rgb(94, 196, 162);
+    color: white;
+}
+
+.btns .add:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.btns .dlt {
+    background-color: #c9362b; /* Red */
+    color: white;
+}
+
+.btns .dlt:hover {
+    background-color: #a12424; /* Darker red */
 }
