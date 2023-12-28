@@ -345,6 +345,7 @@ input:hover {
     margin-block: 5px;
     margin-left: 5px;
     color: #c3c3c3;
+    margin-right: 0;
 }
 
 .set {
@@ -357,4 +358,54 @@ input:hover {
     padding-block: 2px;
 
 
+}
+
+.set button {
+    
+        /* padding: 5px 10px; */
+        /* margin-inline: 5px; */
+        /* margin-left: 5px; */
+        border: none;
+        border-radius: 1px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        /* Additional styling for buttons */
+        text-align: center;
+        margin-block: 5px;
+        margin-inline: 2px;
+
+    
+}
+
+.set .add {
+    background-color: #4CAF50; /* Green */
+    background-color: rgb(94, 196, 162);
+    color: white;
+}
+.set .add:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.set .dlt {
+    background-color: #c9362b; /* Red */
+    color: white;
+}
+
+.set .dlt:hover {
+    background-color: #a12424; /* Darker red */
+}
+.set-content {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.set-btns {
+    margin: 0;
+}
+
+.set i {
+    height: 10px;
+    width: 10px;
 }
