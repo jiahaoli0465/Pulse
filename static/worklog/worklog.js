@@ -74,7 +74,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     function newSetTemplate(num, weight, reps) {
         return `
         <div class="set">
-            <p>Set ${num} - ${weight}lbs - ${reps} reps</p>
+            <div class="set-content">
+                <p>Set ${num} - ${weight}lbs - ${reps} reps</p>
+                <div class="set-btns"><button class="set-edit"><i class="fa-solid fa-pen-to-square"></i></button></div>
+            </div>
         </div>
         `;
 
