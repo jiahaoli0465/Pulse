@@ -78,6 +78,50 @@
     margin-inline: 20px;
 
 }
+
+#newSetFormDiv {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 300px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    font-size: 18x;
+    font-weight: 530;
+    background-color: #202020;
+
+
+}
+
+#newSetFormDiv form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-inline: 20px;
+
+}
+
+.set-inps {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.set-inps input {
+    margin-block: 10px;
+}
+/* .set-inp label {
+    margin: 0 !important;
+} */
+#newSetFormDiv label {
+    margin-block: 10px;
+}
+
 input:focus,
 textarea:focus,
 select:focus,
@@ -85,7 +129,7 @@ a:focus {
   outline: none;
 }
 
-form input {
+#newExerciseFormDiv input {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
@@ -96,6 +140,27 @@ form input {
     color: rgb(192, 205, 205);
     transition: 0.2s ease-in-out;
 }
+
+
+input:hover {
+    background-color: #252525;
+}
+
+#newSetFormDiv input {
+    width: 45px;
+    padding: 10px;
+    height: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #727272;
+    background-color: #202020;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: rgb(192, 205, 205);
+    transition: 0.2s ease-in-out;
+}
+input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
 
 
 input:hover {
@@ -121,8 +186,33 @@ input:hover {
     cursor: pointer;
 }
 
+#setInputs {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+}
+#createSetBtn {
+    background-color: coral;
+    border: none;
+    /* /* width: 38px; */
+    height: 25px; 
+    border-radius: 2px;
+    margin: 0;
+    transition: 0.2s ease-in-out;
+    margin-inline: 0;
+    /* transform: translateY(2px); */
+    /* /* font-size: 25px; */
+    font-weight: 400; 
+    padding-block: 3px;
+    cursor: pointer;
+}
 
+#createSetBtn:hover {
+    background-color: rgb(255, 100, 80);
+    color: white;
 
+}
 
 #createExerciseBtn:hover {
     background-color: rgb(255, 100, 80);
@@ -144,6 +234,23 @@ input:hover {
 
 
 }
+#exitSet {
+    background-color: rgb(255, 80, 80);
+    border-radius: 2px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    margin: 0;
+    transition: 0.2s ease-in-out;
+    cursor: pointer;
+
+}
+
+#exitSet:hover {
+    background-color: rgb(254, 144, 144);
+
+} 
 #exitCreate:hover {
     background-color: rgb(254, 144, 144);
 

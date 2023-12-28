@@ -2,7 +2,9 @@ const newExerciseBtn = document.querySelector('#newExercise-btn');
 const addExerciseDiv = document.querySelector('#newExerciseFormDiv');
 const newExerciseForm = document.querySelector('#newExerciseForm');
 const exitCreate = document.querySelector('#exitCreate');
-
+const exitSet = document.querySelector('#exitSet');
+const newSetFormDiv = document.querySelector('#newSetFormDiv');
+const newSetForm = document.querySelector('#newSetForm');
 let logsContainer = document.querySelector('.logsContainer'); 
     
 async function sendNewExerciseRequest(exerciseName){
@@ -45,9 +47,16 @@ document.addEventListener('DOMContentLoaded', async function() {
     newExerciseBtn.addEventListener('click', function(){
         addExerciseDiv.classList.remove('hidden');
     });
+
     exitCreate.addEventListener('click', function(){
         addExerciseDiv.classList.add('hidden');
     });
+
+    exitSet.addEventListener('click', function(){
+        newSetFormDiv.classList.add('hidden');
+    });
+
+    newSetFormDiv
     function newExerciseTemplate(exerciseName) {
         return `            
         <div class="log">
@@ -58,6 +67,16 @@ document.addEventListener('DOMContentLoaded', async function() {
                 </div>
             </div>
         </div>`;
+    }
+
+    function newSetTemplate(num, weight, reps) {
+        return `
+        <div class="set">
+            <p>Set ${num} - ${weight}lbs - ${reps} reps</p>
+        </div>
+        `;
+
+    
     }
     
     newExerciseForm.addEventListener('submit', function(e) {
@@ -78,18 +97,31 @@ document.addEventListener('DOMContentLoaded', async function() {
         sendNewExerciseRequest(exerciseName)
 
     });
-
+    
+    newSetForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+    });
 
 
 
     logsContainer.addEventListener('click', function(event) {
     // Check if the clicked element has the class 'dlt'
-    if (event.target.classList.contains('dlt')) {
-        // Show confirmation dialog
-        if (confirm('Are you sure you want to delete this?')) {
-            // Remove the parent element of the clicked button
-            event.target.parentElement.parentElement.parentElement.parentElement.remove();
+        if (event.target.classList.contains('dlt')) {
+            // Show confirmation dialog
+            if (confirm('Are you sure you want to delete this?')) {
+                // Remove the parent element of the clicked button
+                event.target.parentElement.parentElement.parentElement.parentElement.remove();
+            }
         }
-    }
+        if (event.target.classList.contains('add')) {
+            // Show confirmation dialog
+            newSetFormDiv.classList.remove('hidden');
+
+                
+            
+        }
+
+
+    
 });
 });
