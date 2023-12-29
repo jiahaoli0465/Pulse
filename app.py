@@ -119,8 +119,10 @@ def make_worklog(wk_id):
 
 @app.route('/worklog/<int:wk_id>/exercise', methods = ['POST'])
 def add_excercise(wk_id):
-    print("request recieved")
-    return
+    print("exercise request recieved")
+    print(request.json)
+    exercise_data = request.json
+    return "exercise"
 
 @app.route('/worklog/<int:wk_id>/exercise', methods = ['PATCH'])
 def edit_excercise(wk_id):
@@ -132,7 +134,10 @@ def delete_excercise(wk_id):
 
 @app.route('/worklog/<int:wk_id>/exercise/set', methods = ['POST'])
 def add_set(wk_id):
-    return
+    print("set request recieved")
+    print(request.json)
+    set_data = request.json
+    return "sets"
 
 @app.route('/worklog/<int:wk_id>/exercise/set', methods = ['PATCH'])
 def edit_set(wk_id):

@@ -2,10 +2,15 @@ const newExerciseBtn = document.querySelector('#newExercise-btn');
 const addExerciseDiv = document.querySelector('#newExerciseFormDiv');
 const newExerciseForm = document.querySelector('#newExerciseForm');
 const exitCreate = document.querySelector('#exitCreate');
-const exitSet = document.querySelector('#exitSet');
+const exitSetButtons = document.querySelectorAll('.exitSet');
+const editSetButtons = document.querySelectorAll('.set-edit')
 const newSetFormDiv = document.querySelector('#newSetFormDiv');
 const newSetForm = document.querySelector('#newSetForm');
+const editForm = document.querySelector("#editSetFormDiv")
+const editSetForm = document.querySelector('#editSetForm')
 let logsContainer = document.querySelector('.logsContainer'); 
+//imma be real i spent so long trying to find a way to get the stupid number from the url and i cant be bothered anymore
+let worklog_id = window.location.pathname.split('/')[2]
 let currentExerciseId = null;
 
 document.addEventListener('DOMContentLoaded', async function() { 
@@ -18,9 +23,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         addExerciseDiv.classList.add('hidden');
     });
 
-    exitSet.addEventListener('click', function(){
-        newSetFormDiv.classList.add('hidden');
-    });
+    for(let i = 0; i < exitSetButtons.length; i++){
+        exitSetButtons[i].addEventListener('click', function(){
+            console.log("listener")
+            exitSetButtons[i].parentNode.classList.add('hidden')
+            // editForm.classList.add('hidden');
+            // newSetFormDiv.classList.add('hidden');
+        });
+    }
+
+    for(let i = 0; i < editSetButtons.length; i++){
+        editSetButtons[i].addEventListener('click', function(){
+            console.log("edit listener")
+            editForm.classList.remove('hidden')
+        });
+    }
 
     function newExerciseTemplate(exerciseName, exerciseId) {
         let btnId = exerciseId;
@@ -56,7 +73,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         let exerciseName = document.querySelector('#exerciseName').value; 
         console.log(exerciseName);
 
-        // let res = sendNewExerciseRequest(exerciseName)
+        //send request to server
+        console.log("line above sending request")
+        axios.post(`${worklog_id}/exercise`, {
+            exerciseName: exerciseName
+        })
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+          });
 
         const template = newExerciseTemplate(exerciseName, count);
         count += 1;
@@ -73,11 +100,17 @@ document.addEventListener('DOMContentLoaded', async function() {
         const reps = document.querySelector('#set-rep').value;
         
         //send request to server
-        console.log("request sending")
-        fetch(new Request("exercise", {method:"POST", body:JSON.stringify({setNum:num, setWeight:weight, setReps:reps}), headers: {'Content-type': 'application/json; charset=UTF-8'}}))
-        .then((response)=>{
-
+        axios.post(`${worklog_id}/exercise/set`, {
+            setNum: num,
+            setWeight: weight,
+            setReps: reps
         })
+        .then((response) => {
+            console.log(response)
+        })
+        .catch((error) => {
+            console.log(error)
+          });
 
         const setTemplate = newSetTemplate(num, weight, reps);
         const tempDiv = document.createElement('div');
@@ -112,6 +145,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 });
 });
+
+//get parent
 
 // async function sendNewExerciseRequest(exerciseName){
 
