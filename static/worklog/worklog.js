@@ -7,6 +7,8 @@ const newSetFormDiv = document.querySelector('#newSetFormDiv');
 const newSetForm = document.querySelector('#newSetForm');
 let logsContainer = document.querySelector('.logsContainer'); 
 let currentExerciseId = null;
+let currentSetId = null;
+
 
 // async function sendNewExerciseRequest(exerciseName){
 
