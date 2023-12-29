@@ -72,7 +72,9 @@ def show_dashboard():
         return redirect(url_for('show_dashboard'))
     else:
         return render_template('users/dashboard.html', form = form, worklogs = worklogs)
-
+    
+#============== WORKLOG ===================
+    
 @app.route('/edit_worklog/<int:worklog_id>', methods=['GET', 'POST'])
 def edit_worklog(worklog_id):
     form = EditWorkLog()
@@ -113,13 +115,14 @@ def new_worklog():
 def make_worklog(wk_id):
     worklog = Worklog.query.get_or_404(wk_id)
 
-
-
     return render_template('worklog/worklog.html', worklog = worklog)
 
 @app.route('/worklog/<int:wk_id>/exercise', methods = ['POST'])
 def add_excercise(wk_id):
-    return
+    print("exercise request recieved")
+    print(request.json)
+    exercise_data = request.json
+    return "exercise"
 
 @app.route('/worklog/<int:wk_id>/exercise', methods = ['PATCH'])
 def edit_excercise(wk_id):
@@ -131,7 +134,10 @@ def delete_excercise(wk_id):
 
 @app.route('/worklog/<int:wk_id>/exercise/set', methods = ['POST'])
 def add_set(wk_id):
-    return
+    print("set request recieved")
+    print(request.json)
+    set_data = request.json
+    return "sets"
 
 @app.route('/worklog/<int:wk_id>/exercise/set', methods = ['PATCH'])
 def edit_set(wk_id):
