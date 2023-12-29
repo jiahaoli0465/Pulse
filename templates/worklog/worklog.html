@@ -48,7 +48,7 @@
     </div>
 
     <div id="newSetFormDiv" class="hidden">
-        <button id="exitSet">X</button>
+        <button class="exitSet">X</button>
         <form id="newSetForm" action="">
             <h3>New set for exercise</h3>
             
@@ -74,13 +74,38 @@
             </div>
             <button id="createSetBtn">Create</button>
         </form>
+    </div>
 
+    <div id="editSetFormDiv" class="hidden">
+        <button class="exitSet">X</button>
+        <!-- dunno if need to change these ids -->
+        <form id="editSetForm" action="">
+            <h3>New set for exercise</h3>
+            
+
+            <div id="setInputs">
+                <div class="set-inps"  id="setNumDiv">
+                    <label for="set-num">Set: </label>
+                    <input type="number" name="set-num" id="set-num" min="1" max="99">
+                </div>
+                
+                <div class="set-inps"  id="setWeightDiv">
+                    <label for="set-weight">Weight(lbs): </label>
+                    <input type="number" name="set-weight" id="set-weight" min="1" max="999">
+                    
+                </div>
+
+                <div class="set-inps" id="setRepDiv">
+                    <label for="set-rep">Reps: </label>
+                    <input type="number" name="set-rep" id="set-rep" min="1" max="999"> 
+                </div>
+            </div>
+            <button id="editSetBtn">Save Changes</button>
+        </form>
     </div>
 </div>
 
-
-
-
+<script src="https://cdnjs.com/libraries/axios "></script>
 <script src="/static/worklog/worklog.js"></script> 
 {% endblock %}
 

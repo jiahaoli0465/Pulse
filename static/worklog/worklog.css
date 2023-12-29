@@ -98,6 +98,25 @@
 
 }
 
+#editSetFormDiv {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 250px;
+    height: 300px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid grey;
+    font-size: 18x;
+    font-weight: 530;
+    background-color: #202020;
+
+
+}
+
 #newSetFormDiv form{
     display: flex;
     flex-direction: column;
@@ -234,7 +253,7 @@ input:hover {
 
 
 }
-#exitSet {
+.exitSet {
     background-color: rgb(255, 80, 80);
     border-radius: 2px;
     position: absolute;
@@ -247,7 +266,7 @@ input:hover {
 
 }
 
-#exitSet:hover {
+.exitSet:hover {
     background-color: rgb(254, 144, 144);
 
 } 
