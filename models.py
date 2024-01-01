@@ -102,6 +102,19 @@ class Worklog(db.Model):
     user = db.relationship('User', backref='worklogs')
     workout_type = db.relationship('WorkoutType', backref='worklogs')
     
+class WorkoutExercise(db.Model):
+    __tablename__ = 'workout_exercises'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+    worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), nullable=False)
+    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
+
+    worklog = db.relationship('Worklog', backref='workout_exercises')
+    exercise = db.relationship('Exercise', backref='workout_exercises')
+
+
 
 class Exercise(db.Model):
     __tablename__ = 'exercises'
@@ -114,15 +127,13 @@ class ExerciseSet(db.Model):
     __tablename__ = 'exercise_sets'
 
     id = db.Column(db.Integer, primary_key=True)
-    worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), nullable=False)  
-    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)  
+    workout_exercise_id = db.Column(db.Integer, db.ForeignKey('workout_exercises.id'), nullable=False)
+    set_number = db.Column(db.Integer, nullable=False) 
     weight = db.Column(db.Float)
     reps = db.Column(db.Integer)
-    rest_time = db.Column(db.Integer)
 
-    worklog = db.relationship('Worklog', backref='exercise_sets')
-    exercise = db.relationship('Exercise', backref='exercise_sets')
 
+    workout_exercise = db.relationship('WorkoutExercise', backref='exercise_sets')
 
 
 def connect_db(app):
