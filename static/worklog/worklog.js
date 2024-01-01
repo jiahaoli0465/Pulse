@@ -14,6 +14,57 @@ let worklog_id = window.location.pathname.split('/')[2]
 let currentExerciseId = null;
 let currentSetId = null;
 
+class Worklog {
+    constructor(){
+
+    }
+
+
+    newExerciseTemplate(exerciseName, exerciseId) {
+        let btnId = exerciseId;
+        return `            
+        <div class="log">
+            <div class="log-container">
+                <div class="log-title"><h4>${exerciseName}</h4> <div class="btns"><button data-btnId = ${btnId} class="add">+</button><button class="dlt">x</button></div></div>
+                <div class="log-content" data-exerciseId = ${exerciseId}>
+
+                </div>
+            </div>
+        </div>`;
+    }
+
+
+}
+
+class Exercise {
+
+
+    constructor() {
+
+    }
+
+    newSetTemplate(num, weight, reps) {
+        return `
+        <div class="set">
+            <div class="set-content">
+                <p>Set ${num} - ${weight}lbs - ${reps} reps</p>
+                <div class="set-btns"><button class="set-edit"><i class="fa-solid fa-pen-to-square"></i></button></div>
+            </div>
+        </div>
+        `;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 document.addEventListener('DOMContentLoaded', async function() { 
         
@@ -148,39 +199,3 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 });
 
-//get parent
-
-// async function sendNewExerciseRequest(exerciseName){
-
-//     console.log(`send ${exerciseName}`)
-//     const options = {
-//         method:"POST", 
-
-//         body:JSON.stringify({
-//             exerciseName:exerciseName
-//         }), 
-
-//         headers: {'Content-type': 'application/json; charset=UTF-8'}
-//     }
-    
-//     const url = "";
-//     const request = new Request(url, options)
-
-//     await fetch(request)
-//     .then((response) => {
-//         if(response.ok){
-//             console.log("Request successful")
-
-//             return response.text()
-//         } else {
-//             throw new Error(`something bad happened: ${response.status}`);
-//         }
-//     })
-//     .then((data) => {
-//         console.log(data)
-//         // here you would add something that handles the data from a json preferably but there's nothing here so have a skeleton instead
-//         for(let thing in data){
-//             //document.getElementById("container for workouts").innerHtml+= "<PUT HTML HERE>"
-//         }
-//     })
-// }

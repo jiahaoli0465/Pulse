@@ -1,12 +1,12 @@
 import os
 
-from flask import Flask, render_template, request, flash, redirect, session, g, url_for
+from flask import Flask, render_template, request, flash, redirect, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
-from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet
+from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
 
 app = Flask(__name__)
 
@@ -117,35 +117,191 @@ def make_worklog(wk_id):
 
     return render_template('worklog/worklog.html', worklog = worklog)
 
-@app.route('/worklog/<int:wk_id>/exercise', methods = ['POST'])
-def add_excercise(wk_id):
-    print("exercise request recieved")
-    print(request.json)
-    exercise_data = request.json
-    return "exercise"
 
-@app.route('/worklog/<int:wk_id>/exercise', methods = ['PATCH'])
-def edit_excercise(wk_id):
-    return
+#CRUD FOR EXERCISE
+###################################################
+@app.route('/worklog/<int:wk_id>/exercise', methods=['POST'])
+def add_exercise(wk_id):
+    print("Exercise request received")
+    
+    # Check if worklog exists
+    worklog = Worklog.query.get(wk_id)
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
 
-@app.route('/worklog/<int:wk_id>/exercise', methods = ['DELETE'])
-def delete_excercise(wk_id):
-    return
+    # Ensure JSON payload is present
+    data = request.json
+    if not data:
+        return jsonify(message="No data provided"), 400
 
-@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['POST'])
-def add_set(wk_id):
-    print("set request recieved")
-    print(request.json)
-    set_data = request.json
-    return "sets"
+    # Extract and validate name
+    name = data.get('name')
+    if not name:
+        return jsonify(message="Exercise name is required"), 400
 
-@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['PATCH'])
-def edit_set(wk_id):
-    return
+    # Create and save the new exercise
+    new_exercise = WorkoutExercise(worklog_id=wk_id, name=name)
+    db.session.add(new_exercise)
+    db.session.commit()
 
-@app.route('/worklog/<int:wk_id>/exercise/set', methods = ['DELETE'])
-def delete_set(wk_id):
-    return
+    return jsonify(message="Exercise created"), 201
+
+
+@app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>', methods=['PATCH'])
+def edit_exercise(wk_id, ex_id):
+    print("Exercise edit request received")
+    
+    # Check if worklog and exercise exists
+    worklog = Worklog.query.get(wk_id)
+    workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
+    
+    if not workout_exercise:
+        return jsonify(message="Exercise not found"), 404
+
+    data = request.json
+    if not data:
+        return jsonify(message="No data provided"), 400
+
+    # Update the exercise if a new name is provided
+    name = data.get('name')
+    if name:
+        workout_exercise.name = name
+
+    db.session.commit()
+    return jsonify(message="Exercise updated"), 200
+
+
+@app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>', methods=['DELETE'])
+def delete_exercise(wk_id, ex_id):
+    # Check if worklog and exercise exist
+    worklog = Worklog.query.get(wk_id)
+    workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
+
+    if not workout_exercise:
+        return jsonify(message="Exercise not found"), 404
+
+    # Delete the exercise
+    db.session.delete(workout_exercise)
+    db.session.commit()
+
+    return jsonify(message="Exercise deleted"), 200
+
+#END SECTION
+####################################################################
+
+
+#CRUD FOR SET
+####################################################################
+@app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>/set', methods=['POST'])
+def add_set(wk_id, ex_id):
+    print("Set request received")
+    worklog = Worklog.query.get(wk_id)
+    workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
+    
+    if not workout_exercise:
+        return jsonify(message="Exercise not found"), 404
+
+    data = request.json
+    if not data:
+        return jsonify(message="No data provided"), 400
+
+    set_number = data.get('set_number')
+    weight = data.get('weight')
+    reps = data.get('reps')
+
+    if set_number is None:
+        return jsonify(message="Set number is required"), 400
+    if weight is None:
+        return jsonify(message="Weight data is required"), 400
+    if reps is None:
+        return jsonify(message="Reps data is required"), 400
+
+    # Check if the set number already exists for this exercise
+    existing_set = ExerciseSet.query.filter_by(workout_exercise_id=ex_id, set_number=set_number).first()
+    if existing_set:
+        return jsonify(message="Set number already exists for this exercise"), 400
+
+    new_set = ExerciseSet(workout_exercise_id=ex_id, set_number=set_number, weight=weight, reps=reps)
+
+    db.session.add(new_set)
+    db.session.commit()
+    return jsonify(message="New set created"), 201
+
+
+
+@app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>/set/<int:set_id>', methods=['PATCH'])
+def edit_set(wk_id, ex_id, set_id):
+    print("Set edit request received")
+
+    # Check if worklog and exercise exist
+    worklog = Worklog.query.get(wk_id)
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
+
+    workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+    if not workout_exercise:
+        return jsonify(message="Exercise not found in this worklog"), 404
+
+    # Check if the set exists and belongs to the specified exercise
+    exercise_set = ExerciseSet.query.filter_by(id=set_id, workout_exercise_id=ex_id).first()
+    if not exercise_set:
+        return jsonify(message="Set not found in this exercise"), 404
+
+    data = request.json
+    if not data:
+        return jsonify(message="No data provided"), 400
+
+    # Update the set fields if provided
+    weight = data.get('weight')
+    reps = data.get('reps')
+    if weight is not None:
+        exercise_set.weight = weight
+    if reps is not None:
+        exercise_set.reps = reps
+
+    db.session.commit()
+    return jsonify(message="Set updated"), 200
+
+
+@app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>/set/<int:set_id>', methods=['DELETE'])
+def delete_set(wk_id, ex_id, set_id):
+    print("Set delete request received")
+
+    # Check if worklog and exercise exist
+    worklog = Worklog.query.get(wk_id)
+    if not worklog:
+        return jsonify(message="Worklog not found"), 404
+
+    workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+    if not workout_exercise:
+        return jsonify(message="Exercise not found in this worklog"), 404
+
+    # Check if the set exists and belongs to the specified exercise
+    exercise_set = ExerciseSet.query.filter_by(id=set_id, workout_exercise_id=ex_id).first()
+    if not exercise_set:
+        return jsonify(message="Set not found in this exercise"), 404
+
+    # Delete the set
+    db.session.delete(exercise_set)
+    db.session.commit()
+
+    return jsonify(message="Set deleted"), 200
+#END SECTION
+####################################################################
+
+
+
+
+
 
 #####################################################
 # Login/Register for users
