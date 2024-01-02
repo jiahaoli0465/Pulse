@@ -109,10 +109,10 @@ class WorkoutExercise(db.Model):
     name = db.Column(db.String, nullable=False)
 
     worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), nullable=False)
-    exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=False)
+    # exercise_id = db.Column(db.Integer, db.ForeignKey('exercises.id'), nullable=True)
 
     worklog = db.relationship('Worklog', backref='workout_exercises')
-    exercise = db.relationship('Exercise', backref='workout_exercises')
+    # exercise = db.relationship('Exercise', backref='workout_exercises')
 
 
 

@@ -10,9 +10,12 @@ const editForm = document.querySelector("#editSetFormDiv")
 const editSetForm = document.querySelector('#editSetForm')
 let logsContainer = document.querySelector('.logsContainer'); 
 //imma be real i spent so long trying to find a way to get the stupid number from the url and i cant be bothered anymore
-let worklog_id = window.location.pathname.split('/')[2]
+const worklog_id = document.querySelector('.worklog-container').getAttribute('data-worklog_id');
 let currentExerciseId = null;
 let currentSetId = null;
+
+
+
 
 class Worklog {
     constructor(){
@@ -96,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let btnId = exerciseId;
         return `            
         <div class="log">
-            <div class="log-container">
+            <div class="log-container" data-exercise_id = ${exerciseId}>
                 <div class="log-title"><h4>${exerciseName}</h4> <div class="btns"><button data-btnId = ${btnId} class="add">+</button><button class="dlt">x</button></div></div>
                 <div class="log-content" data-exerciseId = ${exerciseId}>
 
@@ -123,58 +126,67 @@ document.addEventListener('DOMContentLoaded', async function() {
         //btw this form doesnt reset so it just stays as whtever you put before 
 
         e.preventDefault();
-        let exerciseName = document.querySelector('#exerciseName').value; 
-        console.log(exerciseName);
+        let name = document.querySelector('#exerciseName').value; 
+        console.log(name);
 
         //send request to server
         console.log("line above sending request")
-        axios.post(`${worklog_id}/exercise`, {
-            exerciseName: exerciseName
+        axios.post(`/worklog/${worklog_id}/exercise`, {
+            name: name
         })
         .then((response) => {
             console.log(response)
+            const exercise_id = response.data.exercise_id;
+            console.log("Received exercise ID:", exercise_id);
+
+            const template = newExerciseTemplate(name, exercise_id);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = template.trim(); 
+            logsContainer.appendChild(tempDiv.firstChild);
+            addExerciseDiv.classList.add('hidden');
         })
         .catch((error) => {
             console.log(error)
           });
 
-        const template = newExerciseTemplate(exerciseName, count);
-        count += 1;
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = template.trim(); 
-        logsContainer.appendChild(tempDiv.firstChild);
-        addExerciseDiv.classList.add('hidden');
+
+
+        newExerciseForm.reset();
     });
     
     newSetForm.addEventListener('submit', function(e) {
         e.preventDefault();
+        console.log('current exerciseId: ' + currentExerciseId);
+
+        const logContainer = document.querySelector(`[data-exerciseId="${currentExerciseId}"]`);
+
         const num = document.querySelector('#set-num').value;
         const weight = document.querySelector('#set-weight').value;
         const reps = document.querySelector('#set-rep').value;
         
         //send request to server
-        axios.post(`${worklog_id}/exercise/set`, {
+        axios.post(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set`, {
             setNum: num,
             setWeight: weight,
             setReps: reps
         })
         .then((response) => {
             console.log(response)
+            const setTemplate = newSetTemplate(num, weight, reps);
+            const tempDiv = document.createElement('div');
+            tempDiv.innerHTML = setTemplate.trim(); 
+        
+            if (logContainer) {
+                // Append the new set to the log-content div
+                console.log('im here')
+                logContainer.appendChild(tempDiv.firstChild);
+            }
         })
         .catch((error) => {
             console.log(error)
           });
 
-        const setTemplate = newSetTemplate(num, weight, reps);
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = setTemplate.trim(); 
-        const logContainer = document.querySelector(`[data-exerciseId="${currentExerciseId}"]`);
-    
-        if (logContainer) {
-            // Append the new set to the log-content div
-            console.log('im here')
-            logContainer.appendChild(tempDiv.firstChild);
-        }
+
 
         // Reset the form and currentExerciseId
         newSetForm.reset();
@@ -186,15 +198,33 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Check if the clicked element has the class 'dlt'
         if (event.target.classList.contains('dlt')) {
             // Show confirmation dialog
+            
             if (confirm('Are you sure you want to delete this?')) {
                 // Remove the parent element of the clicked button
-                event.target.parentElement.parentElement.parentElement.parentElement.remove();
+                const id = event.target.parentElement.parentElement.parentElement.parentElement.querySelector('.log-container').getAttribute('data-exercise_id');
+                console.log(id)
+
+                axios.delete(`/worklog/${worklog_id}/exercise/${id}`)
+                .then((response) => {
+                    console.log(response)
+                    event.target.parentElement.parentElement.parentElement.parentElement.remove()
+
+                })
+                .catch((error) => {
+                    console.log(error)
+                  });
+                        
+
+
+                // event.target.parentElement.parentElement.parentElement.parentElement.remove();
             }
         }
         if (event.target.classList.contains('add')) {
             // Show confirmation dialog
             currentExerciseId = event.target.getAttribute('data-btnId');
-            newSetFormDiv.classList.remove('hidden');     
+            const id = event.target.parentElement.parentElement.parentElement.parentElement.querySelector('.log-container').getAttribute('data-exercise_id');
+            console.log(id)
+            // newSetFormDiv.classList.remove('hidden');     
         }
 });
 });

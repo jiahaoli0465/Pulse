@@ -20,6 +20,8 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+# db.drop_all()
+
 db.create_all()
 
 
@@ -144,7 +146,7 @@ def add_exercise(wk_id):
     db.session.add(new_exercise)
     db.session.commit()
 
-    return jsonify(message="Exercise created"), 201
+    return jsonify(message="Exercise created", exercise_id = new_exercise.id), 201
 
 
 @app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>', methods=['PATCH'])
@@ -210,13 +212,16 @@ def add_set(wk_id, ex_id):
     if not workout_exercise:
         return jsonify(message="Exercise not found"), 404
 
+
     data = request.json
     if not data:
         return jsonify(message="No data provided"), 400
 
-    set_number = data.get('set_number')
-    weight = data.get('weight')
-    reps = data.get('reps')
+
+    set_number = data.get('setNum')
+    weight = data.get('setWeight')
+    reps = data.get('setReps')
+
 
     if set_number is None:
         return jsonify(message="Set number is required"), 400
