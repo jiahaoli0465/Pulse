@@ -77,19 +77,7 @@ def show_dashboard():
     
 #============== WORKLOG ===================
     
-@app.route('/edit_worklog/<int:worklog_id>', methods=['GET', 'POST'])
-def edit_worklog(worklog_id):
-    form = EditWorkLog()
-    
-    # Populate existing exercises
-    exercises = Exercise.query.all() #add filter for specific workout type
-    form.existing_exercise.choices = [(e.id, e.name) for e in exercises]
 
-    if form.validate_on_submit():
-        # Process the form data
-        pass
-
-    return render_template('edit_worklog.html', form=form)
 
 @app.route('/worklogs/new', methods=['GET', 'POST'])
 def new_worklog():

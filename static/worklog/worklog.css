@@ -125,6 +125,14 @@
 
 }
 
+#editSetForm {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-inline: 20px;
+
+}
+
 .set-inps {
     display: flex;
     flex-direction: row;
@@ -138,6 +146,10 @@
     margin: 0 !important;
 } */
 #newSetFormDiv label {
+    margin-block: 10px;
+}
+
+#editSetFormDiv label {
     margin-block: 10px;
 }
 
@@ -177,6 +189,20 @@ input:hover {
     color: rgb(192, 205, 205);
     transition: 0.2s ease-in-out;
 }
+
+#editSetFormDiv input {
+    width: 45px;
+    padding: 10px;
+    height: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #727272;
+    background-color: #202020;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: rgb(192, 205, 205);
+    transition: 0.2s ease-in-out;
+}
+
 input[type=number]::-webkit-inner-spin-button {
     -webkit-appearance: none;
   }
@@ -211,7 +237,7 @@ input:hover {
     /* justify-content: center; */
     /* align-items: center; */
 }
-#createSetBtn {
+.setBtnClass {
     background-color: coral;
     border: none;
     /* /* width: 38px; */
@@ -227,7 +253,7 @@ input:hover {
     cursor: pointer;
 }
 
-#createSetBtn:hover {
+.setBtnClass:hover {
     background-color: rgb(255, 100, 80);
     color: white;
 
@@ -279,7 +305,7 @@ input:hover {
 
 .logsContainer {
     /* background-color: blue; */
-    height: 550px;
+    height: 560px;
     width: 470px;
     margin: auto;
     display: flex;
@@ -291,6 +317,7 @@ input:hover {
     align-content: flex-start; /* Aligns wrapped lines at the start of the container */
     justify-content: center;
     transform: translateY(-2px);
+    overflow-y: scroll;
 
 }
 
@@ -455,3 +482,7 @@ input:hover {
     background-color: #979797; 
 }
 
+.log-content {
+    height: 150px;
+    overflow-y: scroll;
+}
