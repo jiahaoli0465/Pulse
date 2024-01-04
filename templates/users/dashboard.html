@@ -31,7 +31,17 @@
                     <button id="wl-btn" onclick="newWL()">+</button>
                 </div>
                 
+                <div id="allWorklogs">
 
+                    {% for worklog in worklogs%}
+                        <div class="worklog-lite">
+                            <h3>{{worklog.title}}</h3>
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
 
 
             </div>

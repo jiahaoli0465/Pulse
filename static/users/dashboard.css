@@ -95,10 +95,17 @@
 
 
 #worklogs {
-    height: 600px;
+    height: 400px;
     border-bottom: 2px solid #999;
     margin: 10px;
 
+
+}
+
+#allWorklogs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #wl-header {
@@ -126,6 +133,11 @@
 
 }
 
+.worklog-lite {
+    width: 200px;
+    height: 60px;
+    background-color: #2b2b2b;
+}
 
 
 
