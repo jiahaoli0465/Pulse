@@ -9,55 +9,11 @@ const newSetForm = document.querySelector('#newSetForm');
 const editForm = document.querySelector("#editSetFormDiv")
 const editSetForm = document.querySelector('#editSetForm')
 let logsContainer = document.querySelector('.logsContainer'); 
-//imma be real i spent so long trying to find a way to get the stupid number from the url and i cant be bothered anymore
 const worklog_id = document.querySelector('.worklog-container').getAttribute('data-worklog_id');
 let currentExerciseId = null;
 let currentSetId = null;
 
 
-
-
-
-class Worklog {
-    constructor(){
-
-    }
-
-
-    newExerciseTemplate(exerciseName, exerciseId) {
-        let btnId = exerciseId;
-        return `            
-        <div class="log">
-            <div class="log-container">
-                <div class="log-title"><h4>${exerciseName}</h4> <div class="btns"><button data-btnId = ${btnId} class="add">+</button><button class="dlt">x</button></div></div>
-                <div class="log-content" data-exerciseId = ${exerciseId}>
-
-                </div>
-            </div>
-        </div>`;
-    }
-
-
-}
-
-class Exercise {
-
-
-    constructor() {
-
-    }
-
-    newSetTemplate(num, weight, reps) {
-        return `
-        <div class="set">
-            <div class="set-content">
-                <p>Set ${num} - ${weight}lbs - ${reps} reps</p>
-                <div class="set-btns"><button class="set-edit"><i class="fa-solid fa-pen-to-square"></i></button></div>
-            </div>
-        </div>
-        `;
-    }
-}
 
 
 

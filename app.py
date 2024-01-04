@@ -120,6 +120,10 @@ def make_worklog(wk_id):
     return render_template('worklog/worklog.html', worklog = worklog)
 
 
+@app.route('/api/getworklog/<int:id>', methods = ['GET'])
+def get_log(id):
+    worklog = Worklog.query.get_or_404(id)
+    return jsonify(worklog=worklog)
 #CRUD FOR EXERCISE
 ###################################################
 @app.route('/worklog/<int:wk_id>/exercise', methods=['POST'])

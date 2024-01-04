@@ -13,7 +13,7 @@
         </div>
         <div class="logsContainer">
 
-            <div class="log">
+            <!-- <div class="log">
                 <div class="log-container"> 
                     <div class="log-title"><h4>Bicep curls</h4> <div class="btns"><button class="add" data-btnId = 1>+</button><button class="dlt">x</button></div></div>
                     <div class="log-content" data-exerciseId="1">
@@ -32,7 +32,37 @@
                              
                         </div>
                     </div>
+                </div> -->
+
+                
+                {% for workout_exercise in worklog.workout_exercises %}
+                <div class="log">
+                    <div class="log-container" data-exercise_id="{{ workout_exercise.id }}">
+                        <div class="log-title">
+                            <h4>{{ workout_exercise.name }}</h4> 
+                            <div class="btns">
+                                <button data-btnId="{{ workout_exercise.id }}" class="add">+</button>
+                                <button class="dlt">x</button>
+                            </div>
+                        </div>
+                        <div class="log-content" data-exerciseId="{{ workout_exercise.id }}">
+                            {% for exercise_set in workout_exercise.exercise_sets %}
+                                <div class="set">
+                                    <div class="set-content">
+                                        <p data-setIdContainer="{{ exercise_set.id }}">Set {{ exercise_set.set_number }} - {{ exercise_set.weight }}lbs - {{ exercise_set.reps }} reps</p>
+                                        <div class="set-btns">
+                                            <button data-setId="{{ exercise_set.id }}" class="set-edit">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
+            {% endfor %}
+
             </div>
         </div>
     </div>
