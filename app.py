@@ -239,7 +239,7 @@ def add_set(wk_id, ex_id):
 
     db.session.add(new_set)
     db.session.commit()
-    return jsonify(message="New set created"), 201
+    return jsonify(message="New set created", set_id = new_set.id), 201
 
 
 
@@ -266,8 +266,13 @@ def edit_set(wk_id, ex_id, set_id):
         return jsonify(message="No data provided"), 400
 
     # Update the set fields if provided
-    weight = data.get('weight')
-    reps = data.get('reps')
+    
+    sets = data.get('setNum')
+    weight = data.get('setWeight')
+    reps = data.get('setReps')
+    print(f'set: {sets} weight: {weight}, reps: {reps}')
+    if sets is not None:
+        exercise_set.set_number = sets
     if weight is not None:
         exercise_set.weight = weight
     if reps is not None:
