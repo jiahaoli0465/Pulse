@@ -148,6 +148,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const num = document.querySelector('#set-num').value;
         const weight = document.querySelector('#set-weight').value;
         const reps = document.querySelector('#set-rep').value;
+
+        console.log(`num:${num}`)
+        console.log(`weight:${num}`)
+        console.log(`reps:${num}`)
         
         //send request to server to create a set
         axios.post(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set`, {
@@ -201,7 +205,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 .catch((error) => {
                     console.log(error)
                   });
-
             }
         }
         if (event.target.classList.contains('add')) {
@@ -232,6 +235,20 @@ document.addEventListener('DOMContentLoaded', async function() {
             currentSetId = setId;
             editForm.classList.remove('hidden')
         }
+    });
+
+    deleteButtonEventListener()
 });
-});
+
+function deleteButtonEventListener(){
+    document.querySelector("#deleteSetBtn").addEventListener('click', () => {
+        axios.delete(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set/${currentSetId}`)
+        .then((response) => {
+            document.querySelector(`[data-setidcontainer="${currentSetId}"]`).parentElement.parentElement.remove()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    })
+}
 

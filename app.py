@@ -191,6 +191,7 @@ def add_set(wk_id, ex_id):
     print("Set request received")
     worklog = Worklog.query.get(wk_id)
     workout_exercise = WorkoutExercise.query.filter_by(id=ex_id, worklog_id=wk_id).first()
+    print(request.json)
 
     if not worklog:
         return jsonify(message="Worklog not found"), 404
@@ -199,6 +200,7 @@ def add_set(wk_id, ex_id):
         return jsonify(message="Exercise not found"), 404
 
     data = request.json
+    print("makes it to data")
     if not data:
         return jsonify(message="No data provided"), 400
 
@@ -254,6 +256,12 @@ def edit_set(wk_id, ex_id, set_id):
     weight = data.get('setWeight')
     reps = data.get('setReps')
     print(f'set: {sets} weight: {weight}, reps: {reps}')
+
+    # Check if the set number already exists for this exercise
+    existing_set = ExerciseSet.query.filter_by(workout_exercise_id=ex_id, set_number=sets).first()
+    if existing_set:
+        return jsonify(message="Set number already exists for this exercise"), 400
+    
     if sets is not None:
         exercise_set.set_number = sets
     if weight is not None:
@@ -290,9 +298,6 @@ def delete_set(wk_id, ex_id, set_id):
     return jsonify(message="Set deleted"), 200
 #END SECTION
 ####################################################################
-
-
-
 
 
 

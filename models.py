@@ -132,8 +132,6 @@ class ExerciseSet(db.Model):
     set_number = db.Column(db.Integer, nullable=False) 
     weight = db.Column(db.Float)
     reps = db.Column(db.Integer)
-
-
     # workout_exercise = db.relationship('WorkoutExercise', backref='exercise_sets')
 
 
