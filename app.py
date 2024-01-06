@@ -20,6 +20,8 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+# db.drop_all()
+
 db.create_all()
 
 
@@ -74,20 +76,6 @@ def show_dashboard():
         return render_template('users/dashboard.html', form = form, worklogs = worklogs)
     
 #============== WORKLOG ===================
-    
-@app.route('/edit_worklog/<int:worklog_id>', methods=['GET', 'POST'])
-def edit_worklog(worklog_id):
-    form = EditWorkLog()
-    
-    # Populate existing exercises
-    exercises = Exercise.query.all() #add filter for specific workout type
-    form.existing_exercise.choices = [(e.id, e.name) for e in exercises]
-
-    if form.validate_on_submit():
-        # Process the form data
-        pass
-
-    return render_template('edit_worklog.html', form=form)
 
 @app.route('/worklogs/new', methods=['GET', 'POST'])
 def new_worklog():
@@ -144,7 +132,7 @@ def add_exercise(wk_id):
     db.session.add(new_exercise)
     db.session.commit()
 
-    return jsonify(message="Exercise created"), 201
+    return jsonify(message="Exercise created", exercise_id = new_exercise.id), 201
 
 
 @app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>', methods=['PATCH'])
@@ -214,9 +202,10 @@ def add_set(wk_id, ex_id):
     if not data:
         return jsonify(message="No data provided"), 400
 
-    set_number = data.get('set_number')
-    weight = data.get('weight')
-    reps = data.get('reps')
+    set_number = data.get('setNum')
+    weight = data.get('setWeight')
+    reps = data.get('setReps')
+
 
     if set_number is None:
         return jsonify(message="Set number is required"), 400
@@ -234,8 +223,7 @@ def add_set(wk_id, ex_id):
 
     db.session.add(new_set)
     db.session.commit()
-    return jsonify(message="New set created"), 201
-
+    return jsonify(message="New set created", set_id = new_set.id), 201
 
 
 @app.route('/worklog/<int:wk_id>/exercise/<int:ex_id>/set/<int:set_id>', methods=['PATCH'])
@@ -261,8 +249,13 @@ def edit_set(wk_id, ex_id, set_id):
         return jsonify(message="No data provided"), 400
 
     # Update the set fields if provided
-    weight = data.get('weight')
-    reps = data.get('reps')
+    
+    sets = data.get('setNum')
+    weight = data.get('setWeight')
+    reps = data.get('setReps')
+    print(f'set: {sets} weight: {weight}, reps: {reps}')
+    if sets is not None:
+        exercise_set.set_number = sets
     if weight is not None:
         exercise_set.weight = weight
     if reps is not None:

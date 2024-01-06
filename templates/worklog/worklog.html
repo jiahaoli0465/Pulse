@@ -2,7 +2,7 @@
 {% block content %}
 <div class="page">
 
-    <div class="worklog-container">
+    <div class="worklog-container" data-worklog_id="{{worklog.id}}">
         <div id="wl-header">
             <div id="wk-titles">
                 <h2>{{worklog.title}}</h2>
@@ -13,7 +13,7 @@
         </div>
         <div class="logsContainer">
 
-            <div class="log">
+            <!-- <div class="log">
                 <div class="log-container"> 
                     <div class="log-title"><h4>Bicep curls</h4> <div class="btns"><button class="add" data-btnId = 1>+</button><button class="dlt">x</button></div></div>
                     <div class="log-content" data-exerciseId="1">
@@ -32,7 +32,37 @@
                              
                         </div>
                     </div>
+                </div> -->
+
+                
+                {% for workout_exercise in worklog.workout_exercises %}
+                <div class="log">
+                    <div class="log-container" data-exercise_id="{{ workout_exercise.id }}">
+                        <div class="log-title">
+                            <h4>{{ workout_exercise.name }}</h4> 
+                            <div class="btns">
+                                <button data-btnId="{{ workout_exercise.id }}" class="add">+</button>
+                                <button class="dlt">x</button>
+                            </div>
+                        </div>
+                        <div class="log-content" data-exerciseId="{{ workout_exercise.id }}">
+                            {% for exercise_set in workout_exercise.exercise_sets %}
+                                <div class="set">
+                                    <div class="set-content">
+                                        <p data-setIdContainer="{{ exercise_set.id }}">Set {{ exercise_set.set_number }} - {{ exercise_set.weight }}lbs - {{ exercise_set.reps }} reps</p>
+                                        <div class="set-btns">
+                                            <button data-setId="{{ exercise_set.id }}" class="set-edit">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
+            {% endfor %}
+
             </div>
         </div>
     </div>
@@ -72,7 +102,7 @@
                     
                 </div>
             </div>
-            <button id="createSetBtn">Create</button>
+            <button class="setBtnClass" id="createSetBtn">Create</button>
         </form>
     </div>
 
@@ -80,27 +110,27 @@
         <button class="exitSet">X</button>
         <!-- dunno if need to change these ids -->
         <form id="editSetForm" action="">
-            <h3>New set for exercise</h3>
+            <h3>Edit set</h3>
             
 
             <div id="setInputs">
                 <div class="set-inps"  id="setNumDiv">
-                    <label for="set-num">Set: </label>
-                    <input type="number" name="set-num" id="set-num" min="1" max="99">
+                    <label for="edit-num">Set: </label>
+                    <input type="number" name="edit-num" id="edit-num" min="1" max="99">
                 </div>
                 
                 <div class="set-inps"  id="setWeightDiv">
-                    <label for="set-weight">Weight(lbs): </label>
-                    <input type="number" name="set-weight" id="set-weight" min="1" max="999">
+                    <label for="edit-weight">Weight(lbs): </label>
+                    <input type="number" name="edit-weight" id="edit-weight" min="1" max="999">
                     
                 </div>
 
                 <div class="set-inps" id="setRepDiv">
-                    <label for="set-rep">Reps: </label>
-                    <input type="number" name="set-rep" id="set-rep" min="1" max="999"> 
+                    <label for="edit-rep">Reps: </label>
+                    <input type="number" name="edit-rep" id="edit-rep" min="1" max="999"> 
                 </div>
             </div>
-            <button id="editSetBtn">Save Changes</button>
+            <button class="setBtnClass" id="editSetBtn">Save Changes</button>
         </form>
     </div>
 </div>
