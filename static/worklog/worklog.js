@@ -13,19 +13,6 @@ const worklog_id = document.querySelector('.worklog-container').getAttribute('da
 let currentExerciseId = null;
 let currentSetId = null;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 document.addEventListener('DOMContentLoaded', async function() { 
         
     newExerciseBtn.addEventListener('click', function(){
@@ -105,9 +92,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         .catch((error) => {
             console.log(error)
           });
-
-
-
         newExerciseForm.reset();
     });
 
@@ -152,7 +136,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Reset the form and currentExerciseId
 
         editSetForm.reset();
-
         editSetForm.parentElement.classList.add('hidden');
     });
     
@@ -165,6 +148,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         const num = document.querySelector('#set-num').value;
         const weight = document.querySelector('#set-weight').value;
         const reps = document.querySelector('#set-rep').value;
+
+        console.log(`num:${num}`)
+        console.log(`weight:${num}`)
+        console.log(`reps:${num}`)
         
         //send request to server to create a set
         axios.post(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set`, {
@@ -194,8 +181,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log(error)
           });
 
-
-
         // Reset the form and currentExerciseId
         newSetForm.reset();
         newSetFormDiv.classList.add('hidden');
@@ -220,10 +205,6 @@ document.addEventListener('DOMContentLoaded', async function() {
                 .catch((error) => {
                     console.log(error)
                   });
-                        
-
-
-                // event.target.parentElement.parentElement.parentElement.parentElement.remove();
             }
         }
         if (event.target.classList.contains('add')) {
@@ -233,7 +214,6 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.log(id)
             console.log(currentExerciseId);
             newSetFormDiv.classList.remove('hidden');     
-
 
         }
 
@@ -251,17 +231,24 @@ document.addEventListener('DOMContentLoaded', async function() {
                 currentExerciseId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-exerciseid');
                 setId = event.target.parentElement.getAttribute('data-setid');
             }
-            
-
-
             console.log(setId);
             currentSetId = setId;
             editForm.classList.remove('hidden')
-
-
-
-
         }
+    });
+
+    deleteButtonEventListener()
 });
-});
+
+function deleteButtonEventListener(){
+    document.querySelector("#deleteSetBtn").addEventListener('click', () => {
+        axios.delete(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set/${currentSetId}`)
+        .then((response) => {
+            document.querySelector(`[data-setidcontainer="${currentSetId}"]`).parentElement.parentElement.remove()
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    })
+}
 

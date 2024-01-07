@@ -466,12 +466,7 @@ input:hover {
     cursor: pointer; 
     border-radius: 8px; 
     box-shadow: 0 0 2px rgba(234, 234, 234, 0.2); 
-
-
-
 }
-
-
 .set-edit i.fa-solid {
     color: #fff;
     font-size: 13.5px; 
