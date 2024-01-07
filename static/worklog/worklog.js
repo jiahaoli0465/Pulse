@@ -13,6 +13,7 @@ const logsContainer = document.querySelector('.logsContainer');
 const worklog_id = document.querySelector('.worklog-container').getAttribute('data-worklog_id');
 
 
+
 document.addEventListener('DOMContentLoaded', function() { 
     //globalish variables for form submisstions
     let currentExerciseId = null;
@@ -206,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Exercise ID not found for adding set");
         }
     }
-    
+
     // Handles the delete action for an exercise.
     function handleDeleteClick(event) {
         if (confirm('Are you sure you want to delete this?')) {
@@ -236,6 +237,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         axios.delete(`/worklog/${worklog_id}/exercise/${exerciseId}`)
             .then(response => {
+                console.log(response);
                 console.log(exerciseId + ' deleted');
 
                 logContainer.parentElement.remove();
@@ -245,20 +247,32 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
-    // deleteButtonEventListener()
+
+    //this handles deleting a set for any exercise.
+    deleteButtonEventListener()
+
+    function deleteButtonEventListener(){
+        document.querySelector("#deleteSetBtn").addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('trying to delete set id: ', currentSetId)
+            if (confirm('delete this set?')) {
+                axios.delete(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set/${currentSetId}`)
+                .then((response) => {
+                    document.querySelector(`[data-setidcontainer="${currentSetId}"]`).parentElement.parentElement.remove()
+                    editSetForm.parentElement.classList.add('hidden');
+                    currentSetId = null;
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+
+            }
+
+        })
+    }
 });
 
 
 
-// function deleteButtonEventListener(){
-//     document.querySelector("#deleteSetBtn").addEventListener('click', () => {
-//         axios.delete(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set/${currentSetId}`)
-//         .then((response) => {
-//             document.querySelector(`[data-setidcontainer="${currentSetId}"]`).parentElement.parentElement.remove()
-//         })
-//         .catch(error => {
-//             console.log(error)
-//         })
-//     })
-// }
+
 
