@@ -1,3 +1,4 @@
+// Select DOM elements
 const newExerciseBtn = document.querySelector('#newExercise-btn');
 const addExerciseDiv = document.querySelector('#newExerciseFormDiv');
 const newExerciseForm = document.querySelector('#newExerciseForm');
@@ -10,10 +11,12 @@ const editForm = document.querySelector("#editSetFormDiv")
 const editSetForm = document.querySelector('#editSetForm')
 const logsContainer = document.querySelector('.logsContainer'); 
 const worklog_id = document.querySelector('.worklog-container').getAttribute('data-worklog_id');
-let currentExerciseId = null;
-let currentSetId = null;
 
-document.addEventListener('DOMContentLoaded', async function() { 
+
+document.addEventListener('DOMContentLoaded', function() { 
+    //globalish variables for form submisstions
+    let currentExerciseId = null;
+    let currentSetId = null;
         
     newExerciseBtn.addEventListener('click', function(){
         addExerciseDiv.classList.remove('hidden');
@@ -74,142 +77,173 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     newExerciseForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        let name = document.querySelector('#exerciseName').value; 
-        console.log(name);
+        const name = document.querySelector('#exerciseName').value;
     
-        axios.post(`/worklog/${worklog_id}/exercise`, {
-            name: name
-        })
-        .then((response) => {
-            console.log(response);
-            const exercise_id = response.data.exercise_id;
-            console.log("Received exercise ID:", exercise_id);
-    
-            appendNewExercise(name, exercise_id); // Use the new function here
+        createExercise(name).then(exercise_id => {
+            console.log('created exercise: ' + exercise_id);
+            appendNewExercise(name, exercise_id);
             addExerciseDiv.classList.add('hidden');
-        })
-        .catch((error) => {
-            console.log(error);
+        }).catch(error => {
+            console.error("Failed to create exercise:", error);
         });
+    
         newExerciseForm.reset();
     });
+    
+    function createExercise(name) {
+        return axios.post(`/worklog/${worklog_id}/exercise`, { name: name })
+            .then(response => response.data.exercise_id);
+    }
     
 
     editSetForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        console.log('current set id: ' + currentSetId);
-        console.log('current exercise id: ' + currentExerciseId);
-    
         const num = document.querySelector('#edit-num').value;
         const weight = document.querySelector('#edit-weight').value;
         const reps = document.querySelector('#edit-rep').value;
-        console.log(num, weight, reps)
     
-        axios.patch(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set/${currentSetId}`, {
-            setNum: num,
-            setWeight: weight,
-            setReps: reps
-        })
-        .then((response) => {
-            console.log(response);
-            let setContainer = document.querySelector(`[data-setidcontainer="${currentSetId}"]`);
-            console.log(setContainer)
-            setContainer.innerHTML = `Set ${num} - ${weight}lbs - ${reps} reps`; // Update existing set element
-    
-            currentExerciseId = null;
-            currentSetId = null;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        updateSet(currentExerciseId, currentSetId, num, weight, reps)
+            .then(() => {
+                console.log('updated...')
+                updateSetDOM(currentSetId, num, weight, reps);
+                currentExerciseId = null;
+                currentSetId = null;
+            })
+            .catch(error => {
+                console.error("Failed to update set:", error);
+            });
     
         editSetForm.reset();
         editSetForm.parentElement.classList.add('hidden');
     });
     
+    function updateSet(exerciseId, setId, num, weight, reps) {
+        return axios.patch(`/worklog/${worklog_id}/exercise/${exerciseId}/set/${setId}`, {
+            setNum: num,
+            setWeight: weight,
+            setReps: reps
+        });
+    }
+    
+    function updateSetDOM(setId, num, weight, reps) {
+        let setContainer = document.querySelector(`[data-setidcontainer="${setId}"]`);
+        setContainer.innerHTML = `Set ${num} - ${weight}lbs - ${reps} reps`;
+    }
+    
+    
     
     newSetForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        console.log('current exerciseId: ' + currentExerciseId);
-    
-        const logContainer = document.querySelector(`[data-exerciseId="${currentExerciseId}"]`);
         const num = document.querySelector('#set-num').value;
         const weight = document.querySelector('#set-weight').value;
         const reps = document.querySelector('#set-rep').value;
     
-        axios.post(`/worklog/${worklog_id}/exercise/${currentExerciseId}/set`, {
-            setNum: num,
-            setWeight: weight,
-            setReps: reps
-        })
-        .then((response) => {
-            console.log(response);
-            const set_id = response.data.set_id;
-            console.log(set_id);
-    
-            appendNewSet(num, weight, reps, set_id, logContainer); 
-    
-            currentExerciseId = null;
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        createSet(currentExerciseId, num, weight, reps)
+            .then(set_id => {
+                console.log('created set: ' + set_id);
+                appendNewSet(num, weight, reps, set_id, document.querySelector(`[data-exerciseId="${currentExerciseId}"]`));
+                currentExerciseId = null;
+            })
+            .catch(error => {
+                console.error("Failed to create set:", error);
+
+            });
     
         newSetForm.reset();
         newSetFormDiv.classList.add('hidden');
     });
     
-
+    function createSet(exerciseId, num, weight, reps) {
+        return axios.post(`/worklog/${worklog_id}/exercise/${exerciseId}/set`, {
+            setNum: num,
+            setWeight: weight,
+            setReps: reps
+        }).then(response => response.data.set_id);
+    }
+    
+    
+    // Handles click events on the logs container.
     logsContainer.addEventListener('click', function(event) {
-    // Check if the clicked element has the class 'dlt'
+        // Delete exercise if 'dlt' class is present in the target element.
         if (event.target.classList.contains('dlt')) {
-            // Show confirmation dialog
-            
-            if (confirm('Are you sure you want to delete this?')) {
-                // Remove the parent element of the clicked button
-                const id = event.target.parentElement.parentElement.parentElement.parentElement.querySelector('.log-container').getAttribute('data-exercise_id');
-                console.log(id)
-
-                axios.delete(`/worklog/${worklog_id}/exercise/${id}`)
-                .then((response) => {
-                    console.log(response)
-                    event.target.parentElement.parentElement.parentElement.parentElement.remove()
-
-                })
-                .catch((error) => {
-                    console.log(error)
-                  });
-            }
-        }
-        if (event.target.classList.contains('add')) {
-            // Show confirmation dialog
-            currentExerciseId = event.target.getAttribute('data-btnId');
-            const id = event.target.parentElement.parentElement.parentElement.parentElement.querySelector('.log-container').getAttribute('data-exercise_id');
-            console.log(id)
-            console.log(currentExerciseId);
-            newSetFormDiv.classList.remove('hidden');     
-
-        }
-
-        if (event.target.classList.contains('set-edit') || event.target.parentElement.classList.contains('set-edit') ) {
-            // Show confirmation dialog
-            console.log('clicked')
-
-            let setId = null;
-            if (event.target.classList.contains('set-edit')) {
-                setId = event.target.getAttribute('data-setid');
-                console.log(event.target.parentElement.parentElement.parentElement.parentElement.getAttribute('data-exerciseid'));
-                currentExerciseId = event.target.parentElement.parentElement.parentElement.parentElement.getAttribute('data-exerciseid');
-            } else {
-                console.log(event.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-exerciseid'));
-                currentExerciseId = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.getAttribute('data-exerciseid');
-                setId = event.target.parentElement.getAttribute('data-setid');
-            }
-            console.log(setId);
-            currentSetId = setId;
-            editForm.classList.remove('hidden')
+            handleDeleteClick(event);
+        } 
+        // Handle adding a set if 'add' class is present.
+        else if (event.target.classList.contains('add')) {
+            handleAddClick(event);
+        } 
+        // Handle set editing if 'set-edit' class is present.        
+        else if (event.target.classList.contains('set-edit') || event.target.parentElement.classList.contains('set-edit')) {
+            handleSetEditClick(event);
         }
     });
+
+    // Handles the edit action for a set.
+    function handleSetEditClick(event) {
+        const editButton = event.target.classList.contains('set-edit') ? event.target : event.target.parentElement;
+        const setId = editButton.getAttribute('data-setid');
+        const exerciseContainer = editButton.closest('.log-container');
+        console.log('selected set id: ', setId);
+    
+        if (exerciseContainer) {
+            currentExerciseId = exerciseContainer.getAttribute('data-exercise_id');
+            currentSetId = setId;
+            editForm.classList.remove('hidden');
+        } else {
+            console.error("Could not find exercise container for editing set");
+        }
+    }
+    
+    // Handles the add action for a set.
+    function handleAddClick(event) {
+        currentExerciseId = event.target.getAttribute('data-btnId');
+        const exerciseId = getExerciseId(event.target);
+        console.log('Adding to exercise ID:', exerciseId);
+        if (exerciseId) {
+            currentExerciseId = exerciseId;
+            newSetFormDiv.classList.remove('hidden');
+        } else {
+            console.error("Exercise ID not found for adding set");
+        }
+    }
+    
+    // Handles the delete action for an exercise.
+    function handleDeleteClick(event) {
+        if (confirm('Are you sure you want to delete this?')) {
+            const exerciseId = getExerciseId(event.target);
+            console.log('deleting id: ', exerciseId);
+            if (exerciseId) {
+                deleteExercise(exerciseId, event.target);
+            } else {
+                console.error("Exercise ID not found");
+            }
+        }
+    }
+
+    // Retrieves the exercise ID from a given element.    
+    function getExerciseId(element) {
+        const logContainer = element.closest('.log-container');
+        return logContainer ? logContainer.getAttribute('data-exercise_id') : null;
+    }
+
+     // Performs the delete operation for an exercise.   
+    function deleteExercise(exerciseId, targetElement) {
+        const logContainer = targetElement.closest('.log-container');
+        if (!logContainer) {
+            console.error("Log container not found");
+            return;
+        }
+    
+        axios.delete(`/worklog/${worklog_id}/exercise/${exerciseId}`)
+            .then(response => {
+                console.log(exerciseId + ' deleted');
+
+                logContainer.parentElement.remove();
+            })
+            .catch(error => {
+                console.error("Failed to delete exercise:", error);
+            });
+    }
 
     // deleteButtonEventListener()
 });
