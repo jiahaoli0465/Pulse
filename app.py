@@ -30,25 +30,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-#Use the database jeff so u dont have to looool
-
-# # i dont wanna keep making a new account every time i change an html page
-# def autosignup():
-#     User.signup(
-#                 username="a",
-#                 password="a",
-#                 email="a@a.com",
-#     )
-#     db.session.commit()
-# autosignup()
-
-# #i also cant be bothered to add workout types manually
-# def autoworkoutType():
-#     db.session.add(WorkoutType(id=0, type_name="new awesome workout type"))
-#     db.session.commit()
-# autoworkoutType()
-
-
 @app.route('/')
 def show_home():
     users = User.query.all()
@@ -61,19 +42,8 @@ def form_page():
 @app.route('/dashboard', methods = ['GET', 'POST'])
 @login_required
 def show_dashboard():
-    worklogs = Worklog.query.all()
-    form = NewWorkLog()
-
-    if form.validate_on_submit():
-        title = form.title.data
-
-        worklog = Worklog(title = title, user_id = current_user.id)
-        db.session.add(worklog)
-        db.session.commit()
-
-        return redirect(url_for('show_dashboard'))
-    else:
-        return render_template('users/dashboard.html', form = form, worklogs = worklogs)
+    worklogs = Worklog.query.filter_by(user_id=current_user.id).all()
+    return render_template('users/dashboard.html', worklogs = worklogs)
     
 #============== WORKLOG ===================
 
