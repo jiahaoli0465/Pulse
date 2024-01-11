@@ -32,6 +32,11 @@
     margin-bottom: 6px;
     font-size: 40px;
 }
+#wl-header h5 {
+    color: rgb(178, 189, 189);  
+    margin-block: 0;
+    margin-inline: 3px;
+}
 
 #wk-titles {
     width: 80%;
@@ -354,6 +359,11 @@ input:hover {
     flex-direction: row;
     justify-content: space-between;
 
+}
+.log-title h4 {
+    white-space: nowrap;    /* Prevents the text from wrapping */
+    font-size: 12px;
+    margin-block: 5px;
 }
 
 .btns button {

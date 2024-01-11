@@ -15,6 +15,8 @@ const worklog_id = document.querySelector('.worklog-container').getAttribute('da
 
 
 document.addEventListener('DOMContentLoaded', function() { 
+
+
     //globalish variables for form submisstions
     let currentExerciseId = null;
     let currentSetId = null;

@@ -101,6 +101,11 @@ class Worklog(db.Model):
 
     user = db.relationship('User', backref='worklogs')
     workout_type = db.relationship('WorkoutType', backref='worklogs')
+
+    @property
+    def friendly_date(self):
+        # Format: January 01, 2024 at 12:00 PM
+        return self.created_at.strftime('%B %d, %Y at %I:%M %p') 
     
 class WorkoutExercise(db.Model):
     __tablename__ = 'workout_exercises'

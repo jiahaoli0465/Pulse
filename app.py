@@ -45,6 +45,54 @@ def show_dashboard():
     worklogs = Worklog.query.filter_by(user_id=current_user.id).all()
     return render_template('users/dashboard.html', worklogs = worklogs)
     
+
+
+#============== WORKLOG AI ===================
+@app.route('/api/user/<int:user_id>/worklogs', methods = ['GET'])
+def get_userLogs(user_id):
+    worklogs = Worklog.query.filter_by(user_id=user_id).all()
+    
+    worklogs_data = []
+    for log in worklogs:
+        workout_exercises_data = []
+        for exercise in log.workout_exercises:
+            exercise_sets_data = []
+            for set in exercise.exercise_sets:
+                exercise_sets_data.append({
+                    "set_number": set.set_number,
+                    "weight": set.weight,
+                    "reps": set.reps
+                })
+            
+            workout_exercises_data.append({
+                "id": exercise.id,
+                "name": exercise.name,
+                "exercise_sets": exercise_sets_data
+            })
+        
+        worklogs_data.append({
+            "id": log.id,
+            "title": log.title,
+            "workout_type": {
+                "id": log.workout_type.id,
+                "type_name": log.workout_type.type_name,
+                "description": log.workout_type.description
+            },
+            "created_at": log.created_at.isoformat(),
+            "workout_exercises": workout_exercises_data
+        })
+    
+    response = {
+        "user_id": user_id,
+        "worklogs": worklogs_data
+    }
+
+    return jsonify(response)
+
+
+
+
+
 #============== WORKLOG ===================
 
 @app.route('/worklogs/new', methods=['GET', 'POST'])
