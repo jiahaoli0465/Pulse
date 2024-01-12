@@ -88,7 +88,16 @@ class WorkoutType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     type_name = db.Column(db.String, nullable=False)
     description = db.Column(db.Text)
-    
+
+class WorklogWorkoutType(db.Model):
+    __tablename__ = 'worklog_workout_type'
+    worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), primary_key=True)
+    workout_type_id = db.Column(db.Integer, db.ForeignKey('workout_types.id'), primary_key=True)
+
+
+    worklog = db.relationship('Worklog', backref=db.backref("worklog_workout_types"))
+    workout_type = db.relationship('WorkoutType', backref=db.backref("worklog_workout_types"))
+
 
 class Worklog(db.Model):
     __tablename__ = 'worklogs'
@@ -96,17 +105,17 @@ class Worklog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    workout_type_id = db.Column(db.Integer, db.ForeignKey('workout_types.id'))
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user = db.relationship('User', backref='worklogs')
-    workout_type = db.relationship('WorkoutType', backref='worklogs')
+    workout_types = db.relationship('WorkoutType', secondary='worklog_workout_type', backref=db.backref('worklogs', lazy='dynamic'))
 
     @property
     def friendly_date(self):
         # Format: January 01, 2024 at 12:00 PM
         return self.created_at.strftime('%B %d, %Y at %I:%M %p') 
-    
+        
 class WorkoutExercise(db.Model):
     __tablename__ = 'workout_exercises'
 

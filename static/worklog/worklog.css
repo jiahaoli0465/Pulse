@@ -501,3 +501,13 @@ input:hover {
 #deleteSetBtn:hover {
     background-color: #be1f1f;
 }
+
+.typeName {
+    font-size: 16px;
+    color: #e3e2e2;
+    background-color: #a05a45;
+    padding-inline: 6px;
+    padding-block: 3px;
+    border-radius: 6px;
+    font-weight: 550;
+}

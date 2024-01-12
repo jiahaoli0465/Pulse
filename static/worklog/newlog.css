@@ -1,33 +1,25 @@
 .container {
     display: flex;
+    flex-direction: column; /* Adjusted for vertical layout */
     width: 400px;
-    height: 350px;
+    max-height: 600px; /* Adjusted for content */
     border: 1px solid grey;
     justify-content: center;
     align-items: center;
     border: 1px solid #5c5c5c;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    padding: 20px; /* Added padding */
 }
-
-
 
 /* Styling for form labels */
 .form-label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-
 }
 
-
-
-
-
-input:focus,
-textarea:focus,
-select:focus,
-a:focus {
-  outline: none;
+input:focus, textarea:focus, select:focus, a:focus {
+    outline: none;
 }
 
 /* General styling for input fields */
@@ -42,55 +34,33 @@ a:focus {
     color: rgb(192, 205, 205);
     transition: 0.2s ease-in-out;
 }
-.form-control:hover  {
+
+.form-control:hover {
     background-color: #252525;
-
 }
 
-#wk-type {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-#wk-type button {
-    background-color: coral;
-    border: none;
-    width: 38px;
-    height: 38px;
-    border-radius: 5px;
-    margin: 0;
-    transition: 0.2s ease-in-out;
-    margin-inline: 0;
-    transform: translateY(2px);
-    font-size: 25px;
-    font-weight: 300;
-}
-
-
-#wk-type button:hover {
-    background-color: rgb(255, 100, 80);
-    color: white;
-
-
-}
+/* Specific styling for select fields */
 select {
-    background-color: #212121 !important;
+    background-color: #212121;
     color: azure;
-    width: 95% !important;
+    width: 100%; /* Adjusted for full width */
+    padding: 10px; /* Padding for aesthetic */
+    border: 1px solid #727272;
+    border-radius: 4px;
+    height: auto; /* Adjust based on content */
+    box-sizing: border-box;
+    transition: 0.2s ease-in-out;
 }
 
-
+select:hover {
+    background-color: #252525;
+}
 
 /* Styling for the submit button */
 .btn {
     width: 100%;
     padding: 10px;
-    
-
-    background-color: rgb(235, 117, 74); /* Blue color */
+    background-color: rgb(235, 117, 74); /* Button color */
     color: white;
     border: none;
     border-radius: 4px;
@@ -100,7 +70,7 @@ select {
 }
 
 .btn:hover {
-    background-color: #d96f65; /* Darker blue on hover */
+    background-color: #d96f65; /* Darker color on hover */
 }
 
 /* Style for error messages */

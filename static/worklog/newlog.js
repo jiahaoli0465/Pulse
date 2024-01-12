@@ -4,10 +4,18 @@ const workoutTypeSelect = document.getElementById("workout_type")
 
 workoutTypeSelect.addEventListener("input", updateWorkoutType)
 
-const newTypeBtn = document.querySelector('#newTypeBtn')
-newTypeBtn.addEventListener('click', function(e) {
+$("select").mousedown(function(e){
     e.preventDefault();
-})
+    
+		var select = this;
+    var scroll = select.scrollTop;
+    
+    e.target.selected = !e.target.selected;
+    
+    setTimeout(function(){select.scrollTop = scroll;}, 0);
+    
+    $(select).focus();
+}).mousemove(function(e){e.preventDefault()});
 
 function updateWorkoutType(){
     console.log("type changed")
@@ -42,3 +50,4 @@ function updateWorkoutType(){
     })
 
 }
+
