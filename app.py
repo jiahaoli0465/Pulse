@@ -8,7 +8,11 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
 from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
 
+
+from assistant.assistant import assistantbot
+
 app = Flask(__name__)
+app.register_blueprint(assistantbot)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
