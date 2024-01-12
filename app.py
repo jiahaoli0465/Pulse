@@ -106,7 +106,7 @@ def get_worklog(worklog_id):
         "title": worklog.title,
         "created_at": worklog.created_at.isoformat(),
         "friendly_date": worklog.friendly_date,
-        "workout_type": worklog.workout_type.type_name if worklog.workout_type else None,
+        "workout_type": [wk.type_name for wk in worklog.workout_types],
         "exercises": [{
             "name": exercise.name,
             "sets": [{
