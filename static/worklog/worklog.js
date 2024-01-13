@@ -16,6 +16,8 @@ const worklog_id = document.querySelector('.worklog-container').getAttribute('da
 
 document.addEventListener('DOMContentLoaded', function() { 
 
+    // getWorklogJson();
+
 
     //globalish variables for form submisstions
     let currentExerciseId = null;
@@ -273,6 +275,18 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     }
 });
+
+// function getWorklogJson(){
+//     axios.get(`/api/worklog/${worklog_id}`)
+//     .then(response=>{
+//         console.log(response.data)
+
+//         axios.post(`/chatbot/chat`, response.data).then(response=>{
+//             console.log("chat message: " + response)
+//         })
+//     })
+// }
+
 
 
 

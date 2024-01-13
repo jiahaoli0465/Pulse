@@ -1,4 +1,5 @@
 import os
+import openai
 
 from flask import Flask, render_template, request, flash, redirect, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
@@ -8,8 +9,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
 from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
 
-
-from assistant.assistant import assistantbot
+from assistant.assistant import assistantbot, client
 
 app = Flask(__name__)
 app.register_blueprint(assistantbot)
@@ -32,7 +32,6 @@ db.create_all()
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
 
 @app.route('/')
 def show_home():
@@ -124,9 +123,6 @@ def get_worklog(worklog_id):
     # Return the JSON response
     return jsonify(worklog_data)
 
-
-
-
 #============== WORKLOG ===================
 
 @app.route('/worklogs/new', methods=['GET', 'POST'])
@@ -159,6 +155,10 @@ def new_worklog():
 
 @app.route('/worklog/<int:wk_id>')
 def make_worklog(wk_id):
+    if 'thread_id' not in session:
+        thread = client.beta.threads.create()
+        session['thread_id'] = thread.id
+        
     worklog = Worklog.query.get_or_404(wk_id)
 
     return render_template('worklog/worklog.html', worklog = worklog)

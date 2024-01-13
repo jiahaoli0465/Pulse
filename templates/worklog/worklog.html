@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="page">
-
     <div class="worklog-container" data-worklog_id="{{worklog.id}}">
         <div id="wl-header">
             <div id="wk-titles">
@@ -118,10 +117,21 @@
             <button class="setBtnClass" id="editSetBtn">Save Changes</button>
         </form>
     </div>
+    <div id="temp">
+        <div class="chat-container">
+            <div class="chat-box" id="chat-box"></div>
+            <div id="inputArea">
+                <input type="text" id="user-input" placeholder="Type a message..." autofocus>
+                <button onclick="sendMessage()">Send</button>
+            </div>
+    
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.com/libraries/axios "></script>
 <script src="/static/worklog/worklog.js"></script> 
+<script src="/static/worklog/gpt_script.js"></script> 
 {% endblock %}
 
 {% block head %}

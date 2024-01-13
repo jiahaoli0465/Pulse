@@ -3,12 +3,10 @@ from jinja2 import TemplateNotFound
 from flask import Flask, render_template, request, jsonify, session
 import openai
 import os
+import json
 
 assistantbot = Blueprint('assistantbot', __name__,
                         template_folder='templates')
-
-
-
 
 # Initialize the OpenAI client
 openai.api_key = os.environ.get("OPENAI_API_KEY")
@@ -30,6 +28,7 @@ def show_home():
 @assistantbot.route('/chatbot/chat', methods=['POST'])
 def chat():
     user_input = request.json['message']
+    print(user_input)
 
     # Retrieve the thread ID from the user session
     thread_id = session.get('thread_id')
