@@ -6,7 +6,13 @@
         <div id="wl-header">
             <div id="wk-titles">
                 <h2>{{worklog.title}}</h2>
-                <h3>Type: {{worklog.workout_type.type_name}}</h3>
+                    <h3>Type: {% for tp in worklog.workout_types %}
+                        
+                        <b class="typeName">{{tp.type_name}}</b>
+                    {% endfor %}
+                </h3>
+
+                <h5>{{ worklog.friendly_date }}</h3>
             </div>
             <button id="newExercise-btn">Add Exercise</button>
             

@@ -8,7 +8,11 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
 from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
 
+
+from assistant.assistant import assistantbot
+
 app = Flask(__name__)
+app.register_blueprint(assistantbot)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     os.environ.get('DATABASE_URL', 'postgresql:///pulse'))
@@ -30,25 +34,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-#Use the database jeff so u dont have to looool
-
-# # i dont wanna keep making a new account every time i change an html page
-# def autosignup():
-#     User.signup(
-#                 username="a",
-#                 password="a",
-#                 email="a@a.com",
-#     )
-#     db.session.commit()
-# autosignup()
-
-# #i also cant be bothered to add workout types manually
-# def autoworkoutType():
-#     db.session.add(WorkoutType(id=0, type_name="new awesome workout type"))
-#     db.session.commit()
-# autoworkoutType()
-
-
 @app.route('/')
 def show_home():
     users = User.query.all()
@@ -61,43 +46,116 @@ def form_page():
 @app.route('/dashboard', methods = ['GET', 'POST'])
 @login_required
 def show_dashboard():
-    worklogs = Worklog.query.all()
-    form = NewWorkLog()
-
-    if form.validate_on_submit():
-        title = form.title.data
-
-        worklog = Worklog(title = title, user_id = current_user.id)
-        db.session.add(worklog)
-        db.session.commit()
-
-        return redirect(url_for('show_dashboard'))
-    else:
-        return render_template('users/dashboard.html', form = form, worklogs = worklogs)
+    worklogs = Worklog.query.filter_by(user_id=current_user.id).all()
+    return render_template('users/dashboard.html', worklogs = worklogs)
     
+
+
+#============== WORKLOG AI ===================
+@app.route('/api/user/<int:user_id>/worklogs', methods = ['GET'])
+def get_userLogs(user_id):
+    worklogs = Worklog.query.filter_by(user_id=user_id).all()
+    
+    worklogs_data = []
+    for log in worklogs:
+        workout_exercises_data = []
+        for exercise in log.workout_exercises:
+            exercise_sets_data = []
+            for set in exercise.exercise_sets:
+                exercise_sets_data.append({
+                    "set_number": set.set_number,
+                    "weight": set.weight,
+                    "reps": set.reps
+                })
+            
+            workout_exercises_data.append({
+                "id": exercise.id,
+                "name": exercise.name,
+                "exercise_sets": exercise_sets_data
+            })
+        
+        worklogs_data.append({
+            "id": log.id,
+            "title": log.title,
+            "workout_type": {
+                "id": log.workout_type.id,
+                "type_name": log.workout_type.type_name,
+                "description": log.workout_type.description
+            },
+            "created_at": log.created_at.isoformat(),
+            "workout_exercises": workout_exercises_data
+        })
+    
+    response = {
+        "user_id": user_id,
+        "worklogs": worklogs_data
+    }
+
+    return jsonify(response)
+
+from flask import jsonify
+
+@app.route('/api/worklog/<int:worklog_id>', methods=['GET'])
+def get_worklog(worklog_id):
+    # Fetch the specific worklog
+    worklog = Worklog.query.get(worklog_id)
+
+    # Check if worklog exists
+    if not worklog:
+        return jsonify({"error": "Worklog not found"}), 404
+
+    # Serialize data
+    worklog_data = {
+        "id": worklog.id,
+        "title": worklog.title,
+        "created_at": worklog.created_at.isoformat(),
+        "friendly_date": worklog.friendly_date,
+        "workout_type": [wk.type_name for wk in worklog.workout_types],
+        "exercises": [{
+            "name": exercise.name,
+            "sets": [{
+                "set_number": eset.set_number,
+                "weight": eset.weight,
+                "reps": eset.reps
+            } for eset in exercise.exercise_sets]
+        } for exercise in worklog.workout_exercises]
+    }
+
+    # Return the JSON response
+    return jsonify(worklog_data)
+
+
+
+
 #============== WORKLOG ===================
 
 @app.route('/worklogs/new', methods=['GET', 'POST'])
 def new_worklog():
     form = NewWorkLog()
-    
-    # add logic for recommended exercises based on exercise type
+
     if form.validate_on_submit():
         title = form.title.data
-        
-        # workout_type= dict(form.workout_type.choices).get(form.workout_type.data)
-        # type_id = form.workout_type.data
-
-        workout_type_id = form.workout_type.data
+        workout_type_ids = form.workout_type.data  # This will be a list of IDs
         user_id = current_user.id 
 
-
-        new_wl = Worklog(title = title, workout_type_id = workout_type_id, user_id = user_id)
+        # Create a new Worklog instance
+        new_wl = Worklog(title=title, user_id=user_id)
         db.session.add(new_wl)
+        db.session.flush()  # Flush the session to get the id for the new worklog
+
+        # Associate selected workout types with the new worklog
+        for wt_id in workout_type_ids:
+            print(f'attempting to add: {wt_id}')
+            # Assuming you have a relationship setup in the Worklog model for workout_types
+            workout_type = WorkoutType.query.get(wt_id)
+            if workout_type:
+                new_wl.workout_types.append(workout_type)
+
         db.session.commit()
-        return redirect(url_for('make_worklog', wk_id = new_wl.id))
+        return redirect(url_for('make_worklog', wk_id=new_wl.id))
 
     return render_template('worklog/newlog.html', form=form)
+
 
 @app.route('/worklog/<int:wk_id>')
 def make_worklog(wk_id):
