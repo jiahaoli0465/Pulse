@@ -3,6 +3,7 @@
 ## Under Construction
 
 **Please note:** This project is currently under development. Features and documentation are in the process of being developed and finalized.
+<img width="1512" alt="image" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/7bf4620a-6af6-4d18-a45a-cb80b19fb628">
 
 <img width="1511" alt="image" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/d6dce56f-540c-43bf-8e34-b755e4feac26">
 
