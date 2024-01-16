@@ -20,7 +20,9 @@ def new_thread():
     if 'thread_id' not in session:
         thread = client.beta.threads.create()
         session['thread_id'] = thread.id
-        
+def reset_thread():
+    new_thread = client.beta.threads.create()
+    session['thread_id'] = new_thread.id
    
 @assistantbot.route('/chatbot')
 def show_home():
