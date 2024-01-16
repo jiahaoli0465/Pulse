@@ -13,10 +13,15 @@ openai.api_key = os.environ.get("OPENAI_API_KEY")
 client = openai.Client(api_key=openai.api_key)
 
 # use an Assistant
-assistant_id = 'asst_egsGHf3oxqSSbXxY5QzqUCnt'
+assistant_id = 'asst_TPmdUIPcSwHxhMLGnHCY9Zdg'
 
 
-
+def new_thread():
+    if 'thread_id' not in session:
+        thread = client.beta.threads.create()
+        session['thread_id'] = thread.id
+        
+   
 @assistantbot.route('/chatbot')
 def show_home():
     # Start a new thread for each user session
@@ -76,7 +81,6 @@ def chat():
 
     if reply is None:
         reply = "No response."
-
     return jsonify({"reply": reply})
 
 

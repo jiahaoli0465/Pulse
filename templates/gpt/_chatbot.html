@@ -3,11 +3,14 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 <link rel="stylesheet" href="/static/gpt/chatbot.css">
 
+
+
 <div id="chatBtn" class="chat-toggle-button">
     <i class="fa fa-comments" aria-hidden="true"></i> <!-- Using Font Awesome icon -->
 </div>
 
-<div id="chatSection" class="hidden">
+
+<div id="chatSection" class="hidden" data-user-id="{{ current_user.id if current_user.is_authenticated else '0' }}">
     <div id="chatHeader">
         <div id="chatHeaderContents">
             <p>Pulse Assistant</p>
@@ -28,6 +31,7 @@
         <input type="text" name="" id="chatInput" placeholder="message">
         <button>send</button>
     </div>
+    <!-- <button id="sendHistoryBtn"></button> -->
     
 
 </div>

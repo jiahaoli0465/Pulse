@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const loader = document.querySelector('.loader-container');
     const chatBtn = document.getElementById('chatBtn');
     const chatSection = document.getElementById('chatSection');
+    const userId = chatSection.getAttribute('data-user-id');
+    sendUserHistory();
+
+
     const exitButton = document.querySelector('#chatHeader button');
     chatSection.classList.add('hidden');
 
@@ -51,34 +55,66 @@ document.addEventListener('DOMContentLoaded', () => {
         loader.style.display = 'none';
     }
 
-async function sendMessage() {
-    const message = inputField.value.trim();
-    if (!message) {
-        // alert("Please enter a message.");
-        return;
+    async function sendMessage() {
+        const message = inputField.value.trim();
+        if (!message) {
+            // alert("Please enter a message.");
+            return;
+        }
+        if (message.length > 500) {
+            alert("Message is too long. Please limit it to 500 characters.");
+            return;
+        }
+
+        addToChat(message); // User message
+        inputField.value = '';
+        showLoader();
+
+        try {
+            // Send data to Flask server using Axios
+            const response = await axios.post('/chatbot/chat', { message: message });
+
+            hideLoader();
+            addToChat(response.data.reply, true); // Bot message
+
+        } catch (error) {
+            addToChat("Failed to get response from the server.", true);
+            hideLoader();
+            console.error("Axios error: " + error);
+        }
+
+
+
     }
-    if (message.length > 500) {
-        alert("Message is too long. Please limit it to 500 characters.");
-        return;
+
+    async function sendHistory() {
+        const history = await axios.get(`/api/user/${userId}/worklogs`)
+        if (!history) {
+            // alert("Please enter a message.");
+            return;
+        }
+
+
+        addToChat(JSON.stringify(history.data)); // User message
+        // inputField.value = '';
+        showLoader();
+
+        try {
+            // Send data to Flask server using Axios
+            const response = await axios.post('/chatbot/chat', { message: JSON.stringify(history.data) });
+
+            hideLoader();
+            addToChat(response.data.reply, true); // Bot message
+
+        } catch (error) {
+            addToChat("Failed to get response from the server.", true);
+            hideLoader();
+            console.error("Axios error: " + error);
+        }
+
+
+
     }
-
-    addToChat(message); // User message
-    inputField.value = '';
-    showLoader();
-
-    try {
-        // Send data to Flask server using Axios
-        const response = await axios.post('/chatbot/chat', { message: message });
-
-        hideLoader();
-        addToChat(response.data.reply, true); // Bot message
-
-    } catch (error) {
-        addToChat("Failed to get response from the server.", true);
-        hideLoader();
-        console.error("Axios error: " + error);
-    }
-}
 
 
 
@@ -89,4 +125,36 @@ async function sendMessage() {
             sendMessage();
         }
     });
+
+
+    async function sendUserHistory(){
+        const chatSection = document.getElementById('chatSection');
+        const userId = chatSection.getAttribute('data-user-id');
+    
+        if (userId == 0) {
+            console.log('no user found')
+            return;
+        }
+        const history = await axios.get(`/api/user/${userId}/worklogs`)
+        
+        console.log(history.data);
+        try {
+            showLoader();
+    
+            let guide = 'this is the server sending you the user history so you can help guide the user for further questions. Do not respond to this message, just keep it to be referenced';
+            const response = await axios.post('/chatbot/chat', { message: `${guide} ${JSON.stringify(history.data)}`});
+            console.log(response.data);
+            hideLoader();
+    
+        }
+        catch (error) {
+            console.error("Axios error: " + error);
+            hideLoader();
+    
+    
+        }
+    
+    }
+
 });
+

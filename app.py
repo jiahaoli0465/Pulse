@@ -51,21 +51,27 @@ def show_dashboard():
 
 
 #============== WORKLOG AI ===================
-@app.route('/api/user/<int:user_id>/worklogs', methods = ['GET'])
+@app.route('/api/user/<int:user_id>/worklogs', methods=['GET'])
 def get_userLogs(user_id):
     worklogs = Worklog.query.filter_by(user_id=user_id).all()
     
     worklogs_data = []
     for log in worklogs:
+        # Fetching workout types for each worklog
+        workout_types_data = [{
+            "id": wt.id,
+            "type_name": wt.type_name,
+            "description": wt.description
+        } for wt in log.workout_types]
+
+        # Fetching workout exercises for each worklog
         workout_exercises_data = []
         for exercise in log.workout_exercises:
-            exercise_sets_data = []
-            for set in exercise.exercise_sets:
-                exercise_sets_data.append({
-                    "set_number": set.set_number,
-                    "weight": set.weight,
-                    "reps": set.reps
-                })
+            exercise_sets_data = [{
+                "set_number": set.set_number,
+                "weight": set.weight,
+                "reps": set.reps
+            } for set in exercise.exercise_sets]
             
             workout_exercises_data.append({
                 "id": exercise.id,
@@ -76,11 +82,7 @@ def get_userLogs(user_id):
         worklogs_data.append({
             "id": log.id,
             "title": log.title,
-            "workout_type": {
-                "id": log.workout_type.id,
-                "type_name": log.workout_type.type_name,
-                "description": log.workout_type.description
-            },
+            "workout_types": workout_types_data,  # Include workout types here
             "created_at": log.created_at.isoformat(),
             "workout_exercises": workout_exercises_data
         })
@@ -91,6 +93,7 @@ def get_userLogs(user_id):
     }
 
     return jsonify(response)
+
 
 
 @app.route('/api/worklog/<int:worklog_id>', methods=['GET'])
