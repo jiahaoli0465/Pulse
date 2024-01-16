@@ -117,16 +117,9 @@
             <button class="setBtnClass" id="editSetBtn">Save Changes</button>
         </form>
     </div>
-    <div id="temp">
-        <div class="chat-container">
-            <div class="chat-box" id="chat-box"></div>
-            <div id="inputArea">
-                <input type="text" id="user-input" placeholder="Type a message..." autofocus>
-                <button onclick="sendMessage()">Send</button>
-            </div>
-    
-        </div>
-    </div>
+    {% block scripts %}
+        {% include '/gpt/_chatbot.html' %}
+    {% endblock %}
 </div>
 
 <script src="https://cdnjs.com/libraries/axios "></script>

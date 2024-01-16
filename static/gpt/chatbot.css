@@ -1,0 +1,204 @@
+#chatSection {
+    position: fixed;
+    background-color: #212121; /* Light grey background */
+    width: 400px;
+    height: 500px;
+    bottom: 10px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    color: #fbfbfb;
+
+}
+
+
+#chatHeader {
+    background-color: rgb(33, 33, 33);
+    color: white;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    z-index: 100;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+
+#chatHeaderContents { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chatHeaderContents p {
+    margin: 0;
+    font-weight: bold;
+}
+
+#chatHeaderContents button {
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: 0;
+    border-radius: 50%;
+    font-weight: 700;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#chatHeaderContents button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+#chatContent {
+    flex-grow: 1;
+    padding: 10px;
+
+    background-color: rgb(35, 35, 35);
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+/* Add keyframes for the animation */
+@keyframes slideFadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Apply the animation to the message */
+.message {
+    display: flex;
+    width: 100%;
+    animation: slideFadeInUp 0.5s ease-out; /* Adjust timing as needed */
+}
+.message.bot-message {
+    justify-content: flex-start; 
+}
+
+.message.user-message {
+    justify-content: flex-end; 
+}
+
+.botText, .userText {
+    max-width: 70%;
+    padding: 10px;
+    padding-inline: 18px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    word-break: break-word;
+}
+
+.botText {
+    background-color: #d35d3f; 
+}
+
+.userText {
+    background-color: #4c94d8;
+}
+
+#inputSection {
+    display: flex;
+    padding: 10px;
+    background-color: rgb(33, 33, 33);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+#inputSection input[type="text"] {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #2d2d2d;
+    background-color: rgb(63, 62, 62);
+    border-radius: 5px;
+    margin-right: 10px;
+    transition: 0.2s ease;
+    color: aliceblue;
+}
+
+#inputSection input[type="text"]:hover {
+    background-color: rgb(48, 46, 46);
+}
+
+#inputSection button {
+    padding: 10px 15px;
+    background-color: #a8564a; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#inputSection button:hover {
+    background-color: #783b3a; 
+}
+
+.loader {
+    border: 4px solid #f3f3f3; /* Light grey */
+    border-top: 4px solid #db4d34; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin: auto;
+    position: absolute;
+    
+}
+.loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
+.hidden {
+    display: none !important;
+}
+
+.chat-toggle-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #a8564a; 
+    color: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: 0.3s ease;
+}
+
+.chat-toggle-button:hover {
+    background-color: #783b3a; 
+    transform: scale(1.1); /* Slightly enlarge the button on hover */
+
+}
+
+.fa-comments {
+    font-size: 24px; /* Adjust icon size */
+}

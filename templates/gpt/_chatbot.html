@@ -1,0 +1,35 @@
+<!-- Chatbot UI -->
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/static/gpt/chatbot.css">
+
+<div id="chatBtn" class="chat-toggle-button">
+    <i class="fa fa-comments" aria-hidden="true"></i> <!-- Using Font Awesome icon -->
+</div>
+
+<div id="chatSection" class="hidden">
+    <div id="chatHeader">
+        <div id="chatHeaderContents">
+            <p>Pulse Assistant</p>
+            <button>X</button>
+        </div>
+    </div>
+
+    <div id="chatContent"> 
+        <div class="loader-container" style="display: none;">
+            <div class="loader"></div>
+        </div>
+        
+
+
+    </div>
+
+    <div id="inputSection">
+        <input type="text" name="" id="chatInput" placeholder="message">
+        <button>send</button>
+    </div>
+    
+
+</div>
+<script src="/static/gpt/chatbot.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

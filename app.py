@@ -92,7 +92,6 @@ def get_userLogs(user_id):
 
     return jsonify(response)
 
-from flask import jsonify
 
 @app.route('/api/worklog/<int:worklog_id>', methods=['GET'])
 def get_worklog(worklog_id):
