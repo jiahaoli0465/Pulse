@@ -13,7 +13,7 @@
 
                 <p>Temporary short bio</p>
             </div>
-            <button id="editProfile">Edit profile</button>
+            <button id="editProfile" onclick="editProfile()">Edit profile</button>
 
             <div class="user-follow">
                 <p>(icon) #<a href="">followers</a> # <a href="">following</a></p>
@@ -43,47 +43,7 @@
         </div>
     </div>
 </div>
-<!-- <script>
 
-    function newExercise(e) {
-        e.preventDefault();
-        let id = this.attr("data-id");
-
-
-        
-
-    }
-
-    async function makeNewExercise(){
-        
-    }
-
-
-
-
-    document.getElementById('deleteUserBtn').addEventListener('click', function() {
-        const username = this.dataset.username;
-        if (!username) {
-            console.error("Username is not provided.");
-            return;
-        }
-
-        if (!confirm('Are you sure you want to delete this account?')) {
-            return;
-        }
-
-        const url = `/users/${username}/delete`; 
-
-        axios.post(url)
-        .then(response => {
-            console.log(response.data.message);
-            window.location.href = '/flashdelete';
-        })
-        .catch(error => {
-            console.error('Error during the delete operation:', error);
-        });
-    });
-</script> -->
 
 
 <script src="/static/users/dashboard.js"></script>

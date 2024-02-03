@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="page">
+ hi {{current_user.username}}
+    <div class="container">
+        <div id="profile" data-user-id="{{current_user.id}}">
+            <div id="profile-img">
+                <img src="{{current_user.image_url}}" alt="profile image for user">
+            </div>
+            <div class="user-info">
+                <h3>{{current_user.name}}</h3>
+                <h4>{{current_user.username}}</h4>
+
+                <p>Temporary short bio</p>
+            </div>
+
+
+
+        </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/users/profile.css">
+{% endblock %}

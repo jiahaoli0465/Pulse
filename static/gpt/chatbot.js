@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatBtn = document.getElementById('chatBtn');
     const chatSection = document.getElementById('chatSection');
     const userId = chatSection.getAttribute('data-user-id');
-    sendUserHistory();
+    // sendUserHistory();
 
 
     const exitButton = document.querySelector('#chatHeader button');

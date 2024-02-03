@@ -4,6 +4,8 @@ import openai
 from flask import Flask, render_template, request, flash, redirect, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
@@ -22,11 +24,13 @@ app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
+migrate = Migrate(app, db)
 
 connect_db(app)
 # db.drop_all()
 
-db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 login_manager = LoginManager()
@@ -38,15 +42,20 @@ def show_home():
     users = User.query.all()
     return render_template('home.html', users = users)
 
-@app.route('/form')
-def form_page():
-    return render_template('form_page.html')
+
 
 @app.route('/dashboard', methods = ['GET', 'POST'])
 @login_required
 def show_dashboard():
     worklogs = Worklog.query.filter_by(user_id=current_user.id).all()
     return render_template('users/dashboard.html', worklogs = worklogs)
+
+@app.route('/profile', methods = ['GET', 'POST'])
+@login_required
+def show_profile():
+
+
+    return render_template('users/profile.html', user = current_user)
     
 
 

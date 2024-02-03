@@ -5,6 +5,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
+# db.create_all()
+
 
 class User(db.Model, UserMixin):
     """User in the system."""
@@ -39,6 +41,13 @@ class User(db.Model, UserMixin):
         db.Text,
         default="/static/images/defaultPic.png",
     )
+
+    name = db.Column(
+        db.String,
+        default="name",
+
+    )
+
 
 
 
