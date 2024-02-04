@@ -1,19 +1,33 @@
 {% extends 'base.html' %}
+{% block head %}
+<link rel="stylesheet" href="/static/home.css">
+{% endblock %}
 {% block content %}
-
-
-    <div class="page">
-
-
-        <div id="postSection">
-            {% for post in posts %}
-                <p>{{post.worklog.title}}</p>
-            {% endfor %}
-
-        </div>
-
-
-
+<div class="page">
+    <div id="postSection">
+        {% for post in posts %}
+            <div class="post">
+                <div class="post-header">
+                    <img class="profile-pic" src="{{ post.user.image_url }}" alt="Profile Picture">
+                    <div class="user-details">
+                        <strong>{{ post.user.username }}</strong>
+                        <span class="post-date">{{ post.created_at.strftime('%B %d, %Y') }}</span>
+                    </div>
+                    <p>{{ post.worklog.title }}</p>
+                </div>
+                <div class="post-content">
+                    test
+                    
+                </div>
+                <div class="post-footer">
+                    <p>{{ post.message }}</p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
+</div>
+
 
 {% endblock %}
+
+

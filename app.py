@@ -42,9 +42,11 @@ login_manager.login_view = 'login'
 def show_home():
     # Get list of user_ids for the current user and the users they follow
     user_ids = [current_user.id] + [user.id for user in current_user.following]
+    print(user_ids)
     
     # Query posts from those users
     posts = Post.query.filter(Post.user_id.in_(user_ids)).order_by(Post.created_at.desc()).all()
+
     
     return render_template('home.html', posts=posts)
 
