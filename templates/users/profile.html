@@ -1,29 +1,60 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
 <div class="page">
- hi {{current_user.username}}
-    <div class="container">
-        <div id="profile" data-user-id="{{current_user.id}}">
-            <div id="profile-img">
-                <img src="{{current_user.image_url}}" alt="profile image for user">
-            </div>
-            <div class="user-info">
-                <h3>{{current_user.name}}</h3>
-                <h4>{{current_user.username}}</h4>
-
-                <p>Temporary short bio</p>
-            </div>
 
 
+<div class="container">
 
+    <form method="POST" class="sign-up-form">
+        <h2 class="title">Edit Profile</h2>
+        {{ form.hidden_tag() }}
+
+        <!-- Displaying Form Errors -->
+        {% for field in form %}
+            {% if field.errors %}
+                <div class="alert-bad">
+                    <p>{{ field.label.text }}: 
+                        {% for error in field.errors %}
+                            <b>{{ error }}</b>
+                        {% endfor %}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Name Field -->
+        <div class="input-field">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(placeholder='Your Full Name', class="form-control") }}
         </div>
+
+        <!-- Image URL Field -->
+        <div class="input-field">
+            {{ form.image_url.label(class="form-label") }}
+            {{ form.image_url(placeholder='Image URL', class="form-control") }}
+        </div>
+
+        <!-- Username Field -->
+        <div class="input-field">
+            {{ form.username.label(class="form-label") }}
+            {{ form.username(placeholder='Username', class="form-control") }}
+        </div>
+
+        <!-- Submit Button -->
+        <input type="submit" value="Save Changes" class="btn">
+    </form>
 </div>
 
+<a href="/dashboard">back to dashboard</a>
 
 
-
+</div>
 {% endblock %}
+
+
+
 
 {% block head %}
 <link rel="stylesheet" href="/static/users/profile.css">

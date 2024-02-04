@@ -55,9 +55,10 @@
     border: none;
     color: azure;
     transition: 0.2s ease-in-out;
-    transform: translateY(50px);
+
     box-shadow: 0 0 5px rgba(0,0,0,0.2); 
     cursor: pointer;
+    margin-block: 5px;
 
 }
 
@@ -516,4 +517,30 @@ input:hover {
     padding-block: 3px;
     border-radius: 6px;
     font-weight: 550;
+}
+
+#postBtn {
+    /* position: fixed !important;
+    right: 100px; 
+    bottom: 20px; */
+    width: 110px;
+    height: 40px;
+    border-radius: 5px;
+    background-color: rgb(74, 171, 235); 
+    border: none;
+    color: azure;
+    transition: 0.2s ease-in-out;
+    margin-block: 5px;
+
+    box-shadow: 0 0 5px rgba(0,0,0,0.2); 
+    cursor: pointer;
+
+}
+
+#postBtn:hover {
+    background-color: rgb(86, 165, 217); 
+}
+#header-btns {
+    display: flex;
+    flex-direction: column;
 }

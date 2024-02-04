@@ -8,15 +8,33 @@
                 <img src="{{current_user.image_url}}" alt="profile image for user">
             </div>
             <div class="user-info">
-                <h3>Temp Name</h3>
+                <h3>{{current_user.name}}</h3>
                 <h4>{{current_user.username}}</h4>
 
-                <p>Temporary short bio</p>
+
             </div>
             <button id="editProfile" onclick="editProfile()">Edit profile</button>
 
             <div class="user-follow">
-                <p>(icon) #<a href="">followers</a> # <a href="">following</a></p>
+                <!-- <a href="/users/{{ current_user.id }}/following">following {{ current_user.following | length }}</a>
+
+                <a href="/users/{{ current_user.id }}/followers">followers{{ current_user.followers | length }}</a> -->
+                <ul class="stats-list">
+                    <li class="stat">
+                      <p class="small">Following</p>
+                      <h4>
+                        <a href="/users/{{ current_user.id }}/following">{{ current_user.following | length }}</a>
+                      </h4>
+                    </li>
+                    <li class="stat">
+                      <p class="small">Followers</p>
+                      <h4>
+                        <a href="/users/{{ current_user.id }}/followers">{{ current_user.followers | length }}</a>
+                      </h4>
+                    </li>
+                  </ul>
+                  
+                <!-- (icon) #<a href="">followers</a> # <a href="">following</a> -->
             </div>
 
         </div>

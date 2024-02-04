@@ -19,6 +19,19 @@ class LoginForm(FlaskForm):
     username = StringField("Username", validators=[InputRequired()])
     password = PasswordField("Password", validators=[InputRequired()])
 
+
+class EditProfileForm(FlaskForm):
+    """Form for setting up user profile."""
+
+    name = StringField("Name", validators=[Optional()])
+    image_url = StringField("Image URL", validators=[Optional()])
+
+    username = StringField("Username", validators=[Optional()])
+
+
+
+
+
 class NewWorkType(FlaskForm):
      """Form for creating new type of workout"""
 

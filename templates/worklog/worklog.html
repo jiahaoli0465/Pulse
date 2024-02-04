@@ -13,8 +13,11 @@
 
                 <h5>{{ worklog.friendly_date }}</h3>
             </div>
-            <button id="newExercise-btn">Add Exercise</button>
-            
+
+            <div id="header-btns">
+                <button id="postBtn">Post Workout</button>
+                <button id="newExercise-btn">Add Exercise</button>
+            </div>
         </div>
         <div class="logsContainer">
                 
@@ -117,10 +120,13 @@
             <button class="setBtnClass" id="editSetBtn">Save Changes</button>
         </form>
     </div>
+
     {% block scripts %}
         {% include '/gpt/_chatbot.html' %}
     {% endblock %}
 </div>
+
+
 
 <script src="https://cdnjs.com/libraries/axios "></script>
 <script src="/static/worklog/worklog.js"></script> 

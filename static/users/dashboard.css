@@ -10,8 +10,8 @@
 }
 
 #profile-img {
-    width: 100%; 
-    height: auto; 
+    width: 250px; 
+    height: 250px ; 
     overflow: hidden;
     border-radius: 50%; 
     border: 1px solid #ccc;
@@ -127,7 +127,36 @@
 }
 
 
-
+.stats-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .stat {
+    text-align: center;
+  }
+  
+  .stat .small {
+    font-size: 0.8rem;
+    color: #666;
+  }
+  
+  .stat h4 {
+    margin: 5px 0;
+    font-size: 1.5rem;
+  }
+  
+  .stat a {
+    text-decoration: none;
+    color: #007bff; /* A simple blue link color */
+  }
+  
+  .stat a:hover {
+    text-decoration: underline;
+  }
+  
 
 
 

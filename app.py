@@ -8,7 +8,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
-from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType
+from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType, EditProfileForm
 from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
 
 from assistant.assistant import assistantbot, client
@@ -27,7 +27,7 @@ toolbar = DebugToolbarExtension(app)
 migrate = Migrate(app, db)
 
 connect_db(app)
-# db.drop_all()
+
 
 with app.app_context():
     db.create_all()
@@ -53,9 +53,16 @@ def show_dashboard():
 @app.route('/profile', methods = ['GET', 'POST'])
 @login_required
 def show_profile():
+    form = EditProfileForm(obj=current_user)
+    if form.validate_on_submit():
+        current_user.name = form.name.data
+        current_user.image_url = form.image_url.data
+        current_user.username = form.username.data
+        db.session.commit()
+        return redirect('/dashboard')
 
 
-    return render_template('users/profile.html', user = current_user)
+    return render_template('users/profile.html', user = current_user , form = form)
     
 
 
