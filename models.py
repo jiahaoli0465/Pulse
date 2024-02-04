@@ -23,7 +23,7 @@ class Follows(db.Model):
         db.ForeignKey('users.id', ondelete="cascade"),
         primary_key=True,
     )
-    
+
 class User(db.Model, UserMixin):
     """User in the system."""
 
@@ -90,7 +90,16 @@ class User(db.Model, UserMixin):
         found_user_list = [user for user in self.following if user == other_user]
         return len(found_user_list) == 1
 
+    # Implement the unfollow method in the User model
+    def unfollow(self, user):
+        if self.is_following(user):
+            self.following.remove(user)
 
+
+    # Implement the follow method in the User model
+    def follow(self, user):
+        if not self.is_following(user):
+            self.following.append(user)
 
 
     @classmethod

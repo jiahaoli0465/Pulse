@@ -49,16 +49,20 @@
     border-radius: 50%;
     margin-bottom: 10px;
     border: 2px solid #FFA500;
+    object-fit: cover; /* Ensures image covers the area without being distorted */
+    display: block; /* Ensures the image is treated as a block-level element, might help in certain layouts */
+    overflow: hidden; /* Hides the parts of the image that do not fit in the container */
   }
   
-  .profile-img {
+  
+  /* .profile-img {
     width: 80px; 
     height: 80px ; 
     overflow: hidden;
     border-radius: 50%; 
     border: 1px solid #ccc;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    /* margin: auto; */
+    margin: auto;
     margin-inline: auto;
     margin-block: 10px;
 }
@@ -67,7 +71,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover; 
-}
+} */
   .user-username {
     font-weight: bold;
   }

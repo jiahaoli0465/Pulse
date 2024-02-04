@@ -6,13 +6,13 @@
     <div class="no-users">Sorry, no users found.</div>
   {% else %}
     <div class="users-grid">
-      {% for user in users %}
+        {% for user in users if user.id != current_user.id %}
         <div class="user-card">
 
           <div class="user-info">
             <a href="/users/{{ user.id }}" class="user-link">
                 <div>
-                    <img src="{{ user.image_url }}" alt="Image for {{ user.username }}" class="profile-img ">
+                    <img src="{{ user.image_url }}" alt="Image for {{ user.username }}" class="user-profile-image">
 
                 </div>
               <p class="user-username">@{{ user.username }}</p>
@@ -20,11 +20,11 @@
             {% if current_user.is_authenticated %}
               <div class="user-action">
                 {% if current_user.is_following(user) %}
-                  <form method="POST" action="/users/stop-following/{{ user.id }}">
+                  <form method="POST" class="unfollowForm" data-userid="{{user.id}}"="" action="">
                     <button class="action-button unfollow">Unfollow</button>
                   </form>
                 {% else %}
-                  <form method="POST" action="/users/follow/{{ user.id }}">
+                  <form method="POST" class="followForm" data-userid="{{user.id}}" action="">
                     <button class="action-button follow">Follow</button>
                   </form>
                 {% endif %}
@@ -36,6 +36,7 @@
     </div>
   {% endif %}
 </div>
+<script src="/static/users/users.js"></script>
 {% endblock %}
 
 {% block head %}

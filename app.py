@@ -69,6 +69,38 @@ def show_users():
     users = User.query.all()
     return render_template('users/users.html', users = users)
 
+@app.route('/api/users/<int:user_id>/follow', methods=['POST'])
+@login_required
+def follow_user(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'status': 'error', 'message': 'User not found.'}), 404
+    if current_user.is_following(user):
+        return jsonify({'status': 'error', 'message': 'Already following this user.'}), 400
+    current_user.follow(user)
+    db.session.commit()
+    print('followed')
+    return jsonify({'status': 'success', 'message': 'You are now following this user.'})
+
+
+
+
+@app.route('/api/users/<int:user_id>/unfollow', methods=['POST'])
+@login_required
+def unfollow_user(user_id):
+    user = User.query.get(user_id)
+    if user is None:
+        return jsonify({'status': 'error', 'message': 'User not found.'}), 404
+    if not current_user.is_following(user):
+        return jsonify({'status': 'error', 'message': 'Not following this user.'}), 400
+    current_user.unfollow(user)
+    db.session.commit()
+    print('unfollowed')
+    return jsonify({'status': 'success', 'message': 'You have unfollowed this user.'})
+
+
+
+
 #============== WORKLOG AI ===================
 @app.route('/api/user/<int:user_id>/worklogs', methods=['GET'])
 def get_userLogs(user_id):
