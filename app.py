@@ -9,7 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 
 from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,NewWorkType, EditProfileForm
-from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise
+from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise, Post
 
 from assistant.assistant import assistantbot, client
 
@@ -38,10 +38,15 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 @app.route('/')
+@login_required
 def show_home():
-    users = User.query.all()
-    return render_template('home.html', users = users)
-
+    # Get list of user_ids for the current user and the users they follow
+    user_ids = [current_user.id] + [user.id for user in current_user.following]
+    
+    # Query posts from those users
+    posts = Post.query.filter(Post.user_id.in_(user_ids)).order_by(Post.created_at.desc()).all()
+    
+    return render_template('home.html', posts=posts)
 
 
 @app.route('/dashboard', methods = ['GET', 'POST'])
@@ -99,6 +104,34 @@ def unfollow_user(user_id):
     return jsonify({'status': 'success', 'message': 'You have unfollowed this user.'})
 
 
+
+
+#============ Post Routes ============
+@app.route('/api/posts/new', methods=['POST'])
+@login_required
+def create_post():
+    # Extracting data from the request's JSON body
+    data = request.json
+    message = data.get('message')
+    worklog_id = data.get('worklog_id')
+    
+    # Basic validation
+    if not message or not worklog_id:
+        return jsonify({'status': 'error', 'message': 'Message and Worklog ID are required.'}), 400
+
+    # Ensure the worklog exists
+    worklog = Worklog.query.get(worklog_id)
+    if not worklog:
+        return jsonify({'status': 'error', 'message': 'Worklog not found.'}), 404
+
+    # Create new post
+    new_post = Post(message=message, user_id=current_user.id, worklog_id=worklog_id)
+    db.session.add(new_post)
+    db.session.commit()
+
+    return jsonify({'status': 'success', 'message': 'Post created successfully.', 'post_id': new_post.id}), 201
+
+#============ End Post Routes ============
 
 
 #============== WORKLOG AI ===================

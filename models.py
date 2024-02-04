@@ -208,6 +208,24 @@ class ExerciseSet(db.Model):
     reps = db.Column(db.Integer)
     # workout_exercise = db.relationship('WorkoutExercise', backref='exercise_sets')
 
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    # Foreign keys
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    worklog_id = db.Column(db.Integer, db.ForeignKey('worklogs.id'), nullable=False)
+
+    # Relationships
+    user = db.relationship('User', backref=db.backref('posts', lazy=True))
+    worklog = db.relationship('Worklog', backref=db.backref('post', uselist=False, lazy=True))
+
+
+
+
 
 def connect_db(app):
     """Connect this database to provided Flask app.

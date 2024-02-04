@@ -11,6 +11,9 @@ const editForm = document.querySelector("#editSetFormDiv")
 const editSetForm = document.querySelector('#editSetForm')
 const logsContainer = document.querySelector('.logsContainer'); 
 const worklog_id = document.querySelector('.worklog-container').getAttribute('data-worklog_id');
+const postForm = document.getElementById('newPostForm');
+const postBtn = document.getElementById('postBtn');
+
 
 
 
@@ -25,6 +28,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
     newExerciseBtn.addEventListener('click', function(){
         addExerciseDiv.classList.remove('hidden');
+    });
+
+    postBtn.addEventListener('click', function(){
+        document.getElementById('PostDiv').classList.remove('hidden');
     });
 
     exitCreate.addEventListener('click', function(){
@@ -274,6 +281,39 @@ document.addEventListener('DOMContentLoaded', function() {
 
         })
     }
+
+
+    postForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent the default form submission
+
+        const message = document.getElementById('message').value;
+        const worklogId = worklog_id; // You need to provide a way to set this
+
+        axios.post('/api/posts/new', {
+            message: message,
+            worklog_id: worklogId
+        })
+        .then(function(response) {
+            console.log(response.data); // Handle success
+            alert('Post created successfully!');
+            document.getElementById('message').value = ''; // Clear the form
+            document.getElementById('PostDiv').classList.add('hidden');
+
+            // Optionally hide the form or give other visual feedback
+        })
+        .catch(function(error) {
+            console.error(error); // Handle error
+            document.getElementById('PostDiv').classList.add('hidden');
+
+            alert('Failed to create post. ' + error.message);
+        });
+    });
+
+
+    document.getElementById('exitPost').addEventListener('click', function() {
+        document.getElementById('PostDiv').classList.add('hidden');
+    });
+    
 });
 
 // function getWorklogJson(){
