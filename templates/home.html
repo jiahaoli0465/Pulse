@@ -16,7 +16,12 @@
                     <p>{{ post.worklog.title }}</p>
                 </div>
                 <div class="post-content">
-                    test
+                    {% for workout_exercise in post.worklog.workout_exercises %}
+                        <div class="workout-exercise">
+                            <p>{{ workout_exercise.name }}</p>
+                            <!-- <p>{{ workout_exercise.sets }} x {{ workout_exercise.reps }}</p> -->
+                        </div>
+                    {% endfor %}
                     
                 </div>
                 <div class="post-footer">
