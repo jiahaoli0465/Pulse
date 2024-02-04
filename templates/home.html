@@ -3,19 +3,17 @@
 
 
     <div class="page">
-        <h1>Home????</h1>
+
+
+        <div id="postSection">
+            {% for post in posts %}
+                <p>{{post.worklog.title}}</p>
+            {% endfor %}
+
+        </div>
 
 
 
-
-        
-        {% if current_user.is_authenticated %}
-        Hi {{ current_user.username }}!
-        {% endif %}
-        <!-- {% for user in users %}
-            <p>{{user.username}}</p>
-        {% endfor %} -->
-        <a href="/form">go to form</a>
     </div>
 
 {% endblock %}
