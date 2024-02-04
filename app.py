@@ -64,7 +64,10 @@ def show_profile():
 
     return render_template('users/profile.html', user = current_user , form = form)
     
-
+@app.route('/users', methods = ['GET', 'POST'])
+def show_users():
+    users = User.query.all()
+    return render_template('users/users.html', users = users)
 
 #============== WORKLOG AI ===================
 @app.route('/api/user/<int:user_id>/worklogs', methods=['GET'])

@@ -1,0 +1,97 @@
+/* 
+  .page {
+    width: 100vw;
+
+    height: calc(100vh - 50px);  
+    width: 100vw;
+} */
+  .no-users {
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .users-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .user-card {
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+    width: 200px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+  
+  .user-image-wrapper {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+
+  
+  .user-info {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .user-link {
+    color: #FFA500;
+    text-decoration: none;
+  }
+  
+  .user-profile-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #FFA500;
+  }
+  
+  .profile-img {
+    width: 80px; 
+    height: 80px ; 
+    overflow: hidden;
+    border-radius: 50%; 
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    /* margin: auto; */
+    margin-inline: auto;
+    margin-block: 10px;
+}
+
+.profile-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+}
+  .user-username {
+    font-weight: bold;
+  }
+  
+  .action-button {
+    border: none;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  .follow {
+    background-color: #FFA500;
+    color: #000;
+  }
+  
+  .unfollow {
+    background-color: #555;
+    color: #fff;
+  }
+  
+  .action-button:hover {
+    opacity: 0.9;
+  }
+  

@@ -18,11 +18,29 @@
             <a href="/register">signup</a>
         {% else %}
 
+        <a id="" href="/users">  
+            <span style="z-index: 20; font-size: 20px; color: rgb(234, 234, 234);">
+                <i class="fa-solid fa-users"></i>
+           
+             </span></i>
+        </a>
+
             <a id="navProfile" href="/dashboard">  
                 <span style="z-index: 20; font-size: 20px; color: rgb(234, 234, 234);">
                     <i class="fa-solid fa-user"></i>             
                  </span></i>
             </a>
+
+            <!-- {% if request.endpoint != None %} -->
+            <!-- <li style="list-style: none; float: right;">
+                <form class="navbar-form navbar-right" action="/users" style="margin: auto; padding: 0;">
+                    <input name="q" class="form-control pulse-search-input" placeholder="Search Warbler" id="search">
+                    <button class="pulse-search-btn">
+                        <span class="fa fa-search"></span>
+                    </button>
+                </form>
+            </li> -->
+            <!-- {% endif %} -->
 
             <div id="menu" class="hidden">
                 <a href="/dashboard">profile</a>

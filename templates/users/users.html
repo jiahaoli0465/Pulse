@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="page">
+  {% if users|length == 0 %}
+    <div class="no-users">Sorry, no users found.</div>
+  {% else %}
+    <div class="users-grid">
+      {% for user in users %}
+        <div class="user-card">
+
+          <div class="user-info">
+            <a href="/users/{{ user.id }}" class="user-link">
+                <div>
+                    <img src="{{ user.image_url }}" alt="Image for {{ user.username }}" class="profile-img ">
+
+                </div>
+              <p class="user-username">@{{ user.username }}</p>
+            </a>
+            {% if current_user.is_authenticated %}
+              <div class="user-action">
+                {% if current_user.is_following(user) %}
+                  <form method="POST" action="/users/stop-following/{{ user.id }}">
+                    <button class="action-button unfollow">Unfollow</button>
+                  </form>
+                {% else %}
+                  <form method="POST" action="/users/follow/{{ user.id }}">
+                    <button class="action-button follow">Follow</button>
+                  </form>
+                {% endif %}
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/users/users.css">
+{% endblock %}
