@@ -37,13 +37,14 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+print('app.py')
+
 @app.route('/')
 @login_required
 def show_home():
     # Get list of user_ids for the current user and the users they follow
     user_ids = [current_user.id] + [user.id for user in current_user.following]
     print(user_ids)
-    
     # Query posts from those users
     posts = Post.query.filter(Post.user_id.in_(user_ids)).order_by(Post.created_at.desc()).all()
 
@@ -508,3 +509,16 @@ def logout():
 
     
 
+def list_files(directory):
+    paths = []
+    for dirname, _, files in os.walk(directory):
+        for filename in files:
+            paths.append(os.path.join(dirname, filename))
+    return paths
+
+if __name__ == "__main__":
+    extra_dirs = ['templates', 'static']
+    extra_files = extra_dirs[:]
+    for extra_dir in extra_dirs:
+        extra_files.extend(list_files(extra_dir))
+    app.run(debug=True, extra_files=extra_files)

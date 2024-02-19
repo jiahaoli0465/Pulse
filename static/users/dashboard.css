@@ -159,4 +159,53 @@
   
 
 
+  .worklog-lite {
+    width: 250px;
+    height: 100px;
+    background-color: #222121;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+    border-radius: 5px; /* Slightly rounded corners */
+    margin-top: 10px;
+  }
 
+.worklog-lite h3 {
+    font-size: 20px;
+    color: white;
+    margin: 0;
+    margin-left: 10px;
+
+
+}
+.worklog-lite p {
+    color: rgb(194, 194, 194);
+    margin: 0;
+    font-size: 13px;
+    margin: 0;
+    margin-left: 10px;
+}
+.log-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+    
+}
+
+.a-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    width: 100px;
+    background-color: #ff8000; /* Orangy-ish color */
+    color: white !important;
+    font-weight: 600;
+    text-decoration: none;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.a-btn:hover {
+    background-color: #FF8C00; /* Darker shade on hover */
+}

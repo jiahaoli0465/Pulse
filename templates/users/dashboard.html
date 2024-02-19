@@ -53,7 +53,13 @@
 
                     {% for worklog in worklogs%}
                         <div class="worklog-lite">
-                            <h3><a href="/worklog/{{worklog.id}}">{{worklog.title}}</a></h3>
+                            <div class="log-header">
+                                <h3><a href="/worklog/{{worklog.id}}">{{worklog.title}}</a></h3>
+                                <p>{{worklog.created_at.strftime('%B %d, %Y')}}</p>    
+
+                                <!-- <a class="a-btn" href="/worklog/{{worklog.id}}"">Show Log</a> -->
+                            </div>
+
                         </div>
                     {% endfor %}
                 </div>
