@@ -25,7 +25,7 @@
              </span></i>
         </a>
 
-            <a id="navProfile" href="/dashboard">  
+            <a id="navProfile" href="/{{ current_user.username }}">  
                 <span style="z-index: 20; font-size: 20px; color: rgb(234, 234, 234);">
                     <i class="fa-solid fa-user"></i>             
                  </span></i>
@@ -43,7 +43,7 @@
             <!-- {% endif %} -->
 
             <div id="menu" class="hidden">
-                <a href="/dashboard">profile</a>
+                <a href="/{{ current_user.username }}">profile</a>
                 <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i> log out</a>
 
             </div>

@@ -52,11 +52,17 @@ def show_home():
     return render_template('home.html', posts=posts)
 
 
-@app.route('/dashboard', methods = ['GET', 'POST'])
+@app.route('/<username>', methods=['GET', 'POST'])
 @login_required
-def show_dashboard():
-    worklogs = Worklog.query.filter_by(user_id=current_user.id).all()
-    return render_template('users/dashboard.html', worklogs = worklogs)
+def show_dashboard(username):
+    # Assuming User is your user model and it has a username field
+    user = User.query.filter_by(username=username).first_or_404()
+    
+    # Now use the user.id to filter worklogs instead of current_user.id
+    worklogs = Worklog.query.filter_by(user_id=user.id).all()
+    
+    return render_template('users/dashboard.html', worklogs=worklogs, user=user)
+
 
 @app.route('/profile', methods = ['GET', 'POST'])
 @login_required
@@ -508,17 +514,3 @@ def logout():
 #####################################################
 
     
-
-def list_files(directory):
-    paths = []
-    for dirname, _, files in os.walk(directory):
-        for filename in files:
-            paths.append(os.path.join(dirname, filename))
-    return paths
-
-if __name__ == "__main__":
-    extra_dirs = ['templates', 'static']
-    extra_files = extra_dirs[:]
-    for extra_dir in extra_dirs:
-        extra_files.extend(list_files(extra_dir))
-    app.run(debug=True, extra_files=extra_files)

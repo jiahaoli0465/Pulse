@@ -1,19 +1,27 @@
 {% extends 'base.html' %}
 {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="page">
     <div class="container">
-        <div id="profile" data-user-id="{{current_user.id}}">
+        <div id="profile" data-user-id="{{user.id}}">
             <div id="profile-img">
-                <img src="{{current_user.image_url}}" alt="profile image for user">
+                <img src="{{user.image_url}}" alt="profile image for user">
             </div>
             <div class="user-info">
-                <h3>{{current_user.name}}</h3>
-                <h4>{{current_user.username}}</h4>
+                <h3>{{user.name}}</h3>
+                <h4>{{user.username}}</h4>
 
 
             </div>
-            <button id="editProfile" onclick="editProfile()">Edit profile</button>
+            
+                {% if current_user and current_user.id == user.id %}
+                    <button id="editProfile" onclick="editProfile()">Edit profile</button>
+                {% else %}
+                    <!-- There's nothing -->
+                    <!-- <button id="editProfile" onclick="editProfile()">Follow</button> -->
+
+                {% endif %}
 
             <div class="user-follow">
                 <!-- <a href="/users/{{ current_user.id }}/following">following {{ current_user.following | length }}</a>
@@ -23,13 +31,13 @@
                     <li class="stat">
                       <p class="small">Following</p>
                       <h4>
-                        <a href="/users/{{ current_user.id }}/following">{{ current_user.following | length }}</a>
+                        <a href="/users/{{ user.id }}/following">{{ user.following | length }}</a>
                       </h4>
                     </li>
                     <li class="stat">
                       <p class="small">Followers</p>
                       <h4>
-                        <a href="/users/{{ current_user.id }}/followers">{{ current_user.followers | length }}</a>
+                        <a href="/users/{{ user.id }}/followers">{{ user.followers | length }}</a>
                       </h4>
                     </li>
                   </ul>
@@ -46,7 +54,9 @@
             <div id="worklogs">
                 <div id="wl-header">
                     <h2>Worklogs</h2>
-                    <button id="wl-btn" onclick="newWL()">+</button>
+                    {% if current_user and current_user.id == user.id %}
+                        <button id="wl-btn" onclick="newWL()">+</button>
+                    {% endif %}
                 </div>
                 
                 <div id="allWorklogs">
@@ -57,12 +67,48 @@
                                 <h3><a href="/worklog/{{worklog.id}}">{{worklog.title}}</a></h3>
                                 <p>{{worklog.created_at.strftime('%B %d, %Y')}}</p>    
 
-                                <!-- <a class="a-btn" href="/worklog/{{worklog.id}}"">Show Log</a> -->
-                            </div>
+                                <div class="worklog-lite-tags">
 
+                                    {% for tp in worklog.workout_types %}
+                                        <b class="typeName">{{tp.type_name}}</b>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
+            </div>
+
+
+
+
+
+            <div id="workout-stats">
+                <h2>Workout Stats</h2>
+                <div id="workout-stats-container">
+                    <div class="stats">
+                        <h3>Workouts</h3>
+                        <p>{{worklogs | length}}</p>
+                    </div>
+                    <div class="stats">
+                        <h3>Exercises</h3>
+                        <p>{{exercises | length}}</p>
+                    </div>
+                    <div class="stats">
+                        <h3>Sets</h3>
+                        <p>{{sets | length}}</p>
+                    </div>
+                </div>
+
+                <div id="workout-chart">
+                    <canvas id="myChart"></canvas>
+                </div>
+                
+
+
+
+                
             </div>
         </div>
     </div>
@@ -71,6 +117,7 @@
 
 
 <script src="/static/users/dashboard.js"></script>
+
 {% endblock %}
 
 {% block head %}
