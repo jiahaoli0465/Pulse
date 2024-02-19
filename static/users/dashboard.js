@@ -109,3 +109,57 @@ console.log(userId)
 fetchWorkoutData(userId);
 
 
+function fetchYearlyWorkoutData(userId) {
+    // Adjust the URL to match your Flask app's route for fetching yearly workout stats
+    fetch(`/api/user/${userId}/worklog-year-stats`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Yearly workout data:', data);
+            updateYearlyChart(data);
+        })
+        .catch(error => {
+            console.error('Error fetching yearly workout data:', error);
+        });
+}
+
+function updateYearlyChart(workoutData) {
+    // Directly use the 'month' value from each data point as the label
+    const labels = workoutData.map(data => data.month);
+    const dataCounts = workoutData.map(data => data.count);
+
+    const ctx = document.getElementById('myYearlyChart').getContext('2d'); // Ensure this ID matches your <canvas> element
+
+
+
+    window.myYearlyChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Yearly Workouts',
+                data: dataCounts,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1,
+                    max: 35 // Adjust max value as necessary
+                }
+            }
+        }
+    });
+}
+
+
+console.log('Fetching yearly workout data for user ID:', userId);
+fetchYearlyWorkoutData(userId);

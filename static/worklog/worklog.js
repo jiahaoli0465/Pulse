@@ -287,15 +287,18 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault(); // Prevent the default form submission
 
         const message = document.getElementById('message').value;
+        const title = document.getElementById('title').value;
         const worklogId = worklog_id; // You need to provide a way to set this
 
         axios.post('/api/posts/new', {
+            title: title,
             message: message,
             worklog_id: worklogId
         })
         .then(function(response) {
             console.log(response.data); // Handle success
             alert('Post created successfully!');
+            document.getElementById('title').value = ''; // Clear the form
             document.getElementById('message').value = ''; // Clear the form
             document.getElementById('PostDiv').classList.add('hidden');
 

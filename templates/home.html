@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div class="post-title">
-                    <h3>{{ post.worklog.title }}</h3>
+                    <h3>{{ post.worklog.title }}  |  {{post.title}}</h3>
                     {% for tp in post.worklog.workout_types %}
                         <b class="typeName">{{tp.type_name}}</b>
                     {% endfor %}
@@ -27,6 +27,7 @@
                 </div>
                 <div class="post-content">
                     <p class="workout-intro">Workout Details:</p>
+                    <p class="workout-date">{{ post.worklog.friendly_date }}</p>
                     <ul class="workout-exercises">
                         {% for workout_exercise in post.worklog.workout_exercises %}
                             <li class="workout-exercise">

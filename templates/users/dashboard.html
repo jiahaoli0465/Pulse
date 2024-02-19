@@ -50,7 +50,33 @@
 
 
         <div id="dashboard">
+            <div id="workout-stats">
+                <h2>Workout Stats</h2>
+                <div id="workout-stats-container">
+                    <div class="stats">
+                        <h3>Workouts</h3>
+                        <p>{{worklogs | length}}</p>
+                    </div>
+                    <div class="stats">
+                        <h3>Exercises</h3>
+                        <p>{{exercises | length}}</p>
+                    </div>
+                    <div class="stats">
+                        <h3>Sets</h3>
+                        <p>{{sets | length}}</p>
+                    </div>
+                </div>
+                <div id="charts">
+                    <div id="workout-chart">
+                        <canvas id="myChart"></canvas>
+                    </div>
 
+                    <div id="year-workout-chart">
+                        <canvas id="myYearlyChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
 
             <div id="worklogs">
                 <div id="wl-header">
@@ -90,7 +116,10 @@
                     {% for post in posts%}
                         <div class="post-lite">
                             <div class="post-header">
-                                hi  
+                                <h3><a href="/post/{{post.id}}">{{post.title}}</a></h3>
+                                <p>{{post.created_at.strftime('%B %d, %Y')}}</p>    
+
+                                <h3 class="pt-wk-title"><a href="/worklog/{{post.worklog.id}}">{{post.worklog.title}}</a></h3>
 
 
                             </div>
@@ -105,32 +134,7 @@
 
 
 
-            <div id="workout-stats">
-                <h2>Workout Stats</h2>
-                <div id="workout-stats-container">
-                    <div class="stats">
-                        <h3>Workouts</h3>
-                        <p>{{worklogs | length}}</p>
-                    </div>
-                    <div class="stats">
-                        <h3>Exercises</h3>
-                        <p>{{exercises | length}}</p>
-                    </div>
-                    <div class="stats">
-                        <h3>Sets</h3>
-                        <p>{{sets | length}}</p>
-                    </div>
-                </div>
 
-                <div id="workout-chart">
-                    <canvas id="myChart"></canvas>
-                </div>
-                
-
-
-
-                
-            </div>
         </div>
     </div>
 </div>

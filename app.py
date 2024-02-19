@@ -62,10 +62,12 @@ def show_dashboard(username):
     
     # Now use the user.id to filter worklogs instead of current_user.id
     worklogs = Worklog.query.filter_by(user_id=user.id).all()
+
     posts = Post.query.filter_by(user_id=user.id).all()
+    workout_exercises = WorkoutExercise.query.join(Worklog).filter(Worklog.user_id == user.id).all()
+    exercise_sets = ExerciseSet.query.join(WorkoutExercise).join(Worklog).filter(Worklog.user_id == user.id).all()
 
-    return render_template('users/dashboard.html', worklogs=worklogs, user=user, posts = posts)
-
+    return render_template('users/dashboard.html', worklogs=worklogs, exercises=workout_exercises, sets=exercise_sets, user=user, posts=posts)
 
 @app.route('/profile', methods = ['GET', 'POST'])
 @login_required
@@ -125,11 +127,15 @@ def create_post():
     # Extracting data from the request's JSON body
     data = request.json
     message = data.get('message')
+    title = data.get('title')
     worklog_id = data.get('worklog_id')
     
     # Basic validation
     if not message or not worklog_id:
         return jsonify({'status': 'error', 'message': 'Message and Worklog ID are required.'}), 400
+
+    if not title:
+        return jsonify({'status': 'error', 'message': 'Title is required.'}), 400
 
     # Ensure the worklog exists
     worklog = Worklog.query.get(worklog_id)
@@ -137,7 +143,7 @@ def create_post():
         return jsonify({'status': 'error', 'message': 'Worklog not found.'}), 404
 
     # Create new post
-    new_post = Post(message=message, user_id=current_user.id, worklog_id=worklog_id)
+    new_post = Post(title = title, message=message, user_id=current_user.id, worklog_id=worklog_id)
     db.session.add(new_post)
     db.session.commit()
 
@@ -260,6 +266,39 @@ def get_workout_stats(user_id):
     stats_data = [
         {"week": f"Week {week - first_week + 1}", "count": count}
         for week, count in week_counts.items()
+    ]
+
+    return jsonify(stats_data)
+
+
+@app.route('/api/user/<int:user_id>/worklog-year-stats', methods=['GET'])
+def get_yearly_workout_stats(user_id):
+    last_year = datetime.now().year
+
+    # Define month names to map numeric months to names
+    month_names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+    # Query to aggregate worklogs by month of the last year and count them
+    stats = db.session.query(
+        extract('month', Worklog.created_at).label('month'),
+        func.count(Worklog.id).label('count')
+    ).filter(
+        Worklog.user_id == user_id,
+        extract('year', Worklog.created_at) == last_year
+    ).group_by('month'
+    ).order_by('month').all()
+
+    # Initialize a dictionary with all months in the year set to 0 counts
+    month_counts = {month: 0 for month in range(1, 13)}
+
+    # Update the dictionary with actual counts from the query
+    for month, count in stats:
+        month_counts[month] = count
+
+    # Convert the month counts dictionary to use month names
+    stats_data = [
+        {"month": month_names[month - 1], "count": count}  # Directly use month name from the list
+        for month, count in month_counts.items()
     ]
 
     return jsonify(stats_data)

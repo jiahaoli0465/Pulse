@@ -100,12 +100,13 @@
     /* margin: 10px; */
     /* border: #9c9c9c solid 1px; */
     width: 100%;
+    margin-top: 20px;
 
 }
 
 #posts {
     width: 100%;
-    height: 300px;
+    height: 400px;
 }
 
 #allWorklogs {
@@ -113,12 +114,15 @@
     gap: 10px;
     flex-wrap: wrap;
     overflow: scroll;
+    height: 240px;
 }
 #allPosts {
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     overflow: scroll;
+    height: 300px;
+
 
 }
 #wl-header  {
@@ -200,7 +204,7 @@
 
 
   .worklog-lite {
-    width: 250px;
+    width: 300px;
     height: 95px;
     background-color: #222121;
     border: #b9551fa6 solid 1px;
@@ -231,15 +235,50 @@
 
     
 }
+.post-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    
+}
+
 
 .post-lite {
-    width: 250px;
-    height: 95px;
+    width: 300px;
+    height: 130px;
     background-color: #222121;
     border: #b9551fa6 solid 1px;
     border-radius: 5px; /* Slightly rounded corners */
     margin-top: 10px;
   }
+
+.post-lite h3 {
+    font-size: 20px;
+    color: white;
+    margin: 0;
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.post-lite p {
+    color: rgb(194, 194, 194);
+    margin: 0;
+    font-size: 13px;
+    margin: 0;
+    margin-left: 10px;
+}
+
+.pt-wk-title a{
+    font-size: 15px;
+    color: #ff8000;
+}
+.pt-wk-title a:hover{
+    text-decoration: underline;
+    color: #ff4000;
+
+}
+
 .a-btn {
     display: inline-block;
     padding: 10px 20px;
@@ -278,10 +317,17 @@
 }
 #workout-stats {
     margin-top: 20px;
-    max-width: 500px;
-    
+    width: 100%;    
 }
-
+#charts {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; /* Allows charts to wrap in smaller screens */
+    justify-content: space-around; /* Distributes space around items */
+    align-items: flex-start; /* Aligns items at the start of the cross axis */
+    gap: 20px; /* Space between charts */
+    margin-top: 20px; /* Additional space from the preceding element */
+}
 #workout-stats h2 {
     font-size: 24px;
     font-weight: bold;
@@ -291,35 +337,74 @@
     display: flex;
     justify-content: space-between;
 
-    margin-top: 10px;
+    /* margin-top: 10px; */
 }
 
-.stats {
-    text-align: center;
-}
+
 #workout-stats h2 {
     color: #e3e2e2 !important;
     border-bottom: 2px solid #2b2b2b;
     padding-bottom: 5px;
 
 }
+.stats {
+    width: auto; /* Allows the box to grow based on content, ensuring better spacing */
+    min-width: 150px; /* Ensures a minimum width for better readability */
+    margin: 10px; /* Adds some space around each stat for better separation */
+    text-align: center;
+    background-color: #333740; /* Adjusted for a slightly lighter or darker contrast as per your theme */
+    padding: 15px; /* Increased padding for a more spacious look */
+    border-radius: 10px; /* Slightly more rounded corners for a modern look */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow for depth */
+    display: inline-block; /* Allows multiple stats to sit in a row */
+    vertical-align: top; /* Aligns stats boxes when they wrap to the next line */
+}
 
-
+/* Enhancing the typography for better readability and visual appeal */
 .stats h3 {
-    color: #e3e2e2;
-
-    font-size: 18px;
-    font-weight: bold;
+    color: #ffffff;
+    margin: 0 0 10px 0; /* Adds space between the heading and paragraph */
+    font-size: 18px; /* Increases size for emphasis */
+    font-weight: 600; /* Bold but not too heavy */
 }
 
 .stats p {
-    color: #adadad !important;
-    font-size: 16px;
-    margin-top: 5px;
+    color: #c2c2c2; /* Lighter color for less emphasis on the count */
+    margin: 0; /* Resets margin for alignment */
+    font-size: 16px; /* Slightly larger font size for readability */
 }
 
-#workout-chart {
-    /* margin-top: 20px;
-    max-width: 700px; */
-    max-height: 250px;
+#workout-chart, #year-workout-chart {
+    flex-basis: 100%; /* On smaller screens, each chart takes full width */
+    max-width: 43%; /* On larger screens, charts take up less than half the container width */
+    background-color: #282c34; /* Dark background for the chart area */
+    border-radius: 8px; /* Rounded corners for the chart containers */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    padding: 15px; /* Padding around the chart canvas */
+}
+
+canvas {
+    width: 100% !important; /* Ensures canvas fills its container width */
+    height: auto !important; /* Adjusts height automatically based on width */
+}
+
+/* Adjusting the stats container for better visual grouping */
+#workout-stats-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Allows stats to wrap in smaller screens */
+    gap: 20px; /* Space between stats */
+}
+
+
+/* Ensuring text color contrasts well with the new background colors */
+.stats h3, .stats p {
+    color: #ffffff;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #workout-chart, #year-workout-chart {
+        flex-basis: 100%; /* Charts take full width on smaller screens */
+    }
 }

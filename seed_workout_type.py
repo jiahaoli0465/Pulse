@@ -11,6 +11,8 @@ def seed_workout_types():
 
     # Expanded list of muscle groups with descriptions
     muscle_groups = [
+        ("Cardio", "Exercises for the heart and lungs"),
+
         ("Chest", "Exercises targeting the chest muscles"),
         ("Back", "Exercises targeting the back muscles"),
         ("Shoulders", "Exercises targeting the shoulder muscles"),
