@@ -62,8 +62,9 @@ def show_dashboard(username):
     
     # Now use the user.id to filter worklogs instead of current_user.id
     worklogs = Worklog.query.filter_by(user_id=user.id).all()
-    
-    return render_template('users/dashboard.html', worklogs=worklogs, user=user)
+    posts = Post.query.filter_by(user_id=user.id).all()
+
+    return render_template('users/dashboard.html', worklogs=worklogs, user=user, posts = posts)
 
 
 @app.route('/profile', methods = ['GET', 'POST'])

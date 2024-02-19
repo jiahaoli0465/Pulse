@@ -1,4 +1,4 @@
-from app import db
+from app import db, app
 from models import WorkoutType
 
 def add_workout_type(name, description):
@@ -42,5 +42,6 @@ def seed_workout_types():
     db.session.commit()  # Commit the changes
 
 if __name__ == "__main__":
-    seed_workout_types()
+    with app.app_context():
+        seed_workout_types()
     print("Database seeded with workout types.")
