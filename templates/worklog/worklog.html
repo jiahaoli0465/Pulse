@@ -5,6 +5,7 @@
         <div id="wl-header">
             <div id="wk-titles">
                 <h2>{{worklog.title}}</h2>
+                <h3>By: {{worklog.user.username}}</h3>
                     <h3>Type: {% for tp in worklog.workout_types %}
                         
                         <b class="typeName">{{tp.type_name}}</b>
@@ -15,8 +16,12 @@
             </div>
 
             <div id="header-btns">
+                {% if current_user and current_user.id == worklog.user.id %}
+
                 <button id="postBtn">Post Workout</button>
                 <button id="newExercise-btn">Add Exercise</button>
+
+                {% endif %}
             </div>
         </div>
         <div class="logsContainer">
@@ -27,8 +32,12 @@
                         <div class="log-title">
                             <h4>{{ workout_exercise.name }}</h4> 
                             <div class="btns">
+                                {% if current_user and current_user.id == worklog.user.id %}
+
                                 <button data-btnId="{{ workout_exercise.id }}" class="add">+</button>
                                 <button class="dlt">x</button>
+
+                                {% endif %}
                             </div>
                         </div>
                         <div class="log-content" data-exerciseId="{{ workout_exercise.id }}">
@@ -37,9 +46,13 @@
                                     <div class="set-content">
                                         <p data-setIdContainer="{{ exercise_set.id }}">Set {{ exercise_set.set_number }} - {{ exercise_set.weight }}lbs - {{ exercise_set.reps }} reps</p>
                                         <div class="set-btns">
+                                            {% if current_user and current_user.id == worklog.user.id %}
+
                                             <button data-setId="{{ exercise_set.id }}" class="set-edit">
                                                 <i class="fa-solid fa-pen-to-square"></i>
                                             </button>
+
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

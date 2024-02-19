@@ -107,3 +107,5 @@ function updateChart(workoutData) {
 const userId = document.querySelector('#profile').dataset.userId;
 console.log(userId)
 fetchWorkoutData(userId);
+
+

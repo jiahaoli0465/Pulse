@@ -28,20 +28,22 @@
 #wl-header h3 {
     color: rgb(178, 189, 189);
     margin: 3px;
-    margin-bottom: 6px;
+    margin-bottom: 3px;
+    font-size: 15px;
 
 }
 #wl-header h2 {
     color: rgb(178, 189, 189);
     color: azure;
     margin: 3px;
-    margin-bottom: 6px;
-    font-size: 40px;
+    margin-bottom: 4px;
+    font-size: 30px;
 }
 #wl-header h5 {
     color: rgb(178, 189, 189);  
     margin-block: 0;
     margin-inline: 3px;
+    font-size: 12px;
 }
 
 #wk-titles {

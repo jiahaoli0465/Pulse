@@ -265,9 +265,17 @@
 .stats {
     text-align: center;
 }
+#workout-stats h2 {
+    color: #e3e2e2 !important;
+    border-bottom: 2px solid #2b2b2b;
+    padding-bottom: 5px;
+
+}
+
 
 .stats h3 {
-    
+    color: #e3e2e2;
+
     font-size: 18px;
     font-weight: bold;
 }
