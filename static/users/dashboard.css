@@ -103,6 +103,13 @@
 
 }
 
+#allWorklogs {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    overflow: scroll;
+}
+
 #wl-header {
     display: flex;
     flex-direction: row;
@@ -239,6 +246,8 @@
 }
 #workout-stats {
     margin-top: 20px;
+    max-width: 500px;
+    
 }
 
 #workout-stats h2 {
@@ -267,4 +276,10 @@
     color: #adadad !important;
     font-size: 16px;
     margin-top: 5px;
+}
+
+#workout-chart {
+    /* margin-top: 20px;
+    max-width: 700px; */
+    max-height: 250px;
 }

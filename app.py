@@ -4,6 +4,8 @@ import openai
 from flask import Flask, render_template, request, flash, redirect, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy import func, extract
+from datetime import datetime, timedelta
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -143,7 +145,7 @@ def create_post():
 #============ End Post Routes ============
 
 
-#============== WORKLOG AI ===================
+#============== WORKLOG API ===================
 @app.route('/api/user/<int:user_id>/worklogs', methods=['GET'])
 def get_userLogs(user_id):
     worklogs = Worklog.query.filter_by(user_id=user_id).all()
@@ -217,6 +219,49 @@ def get_worklog(worklog_id):
 
     # Return the JSON response
     return jsonify(worklog_data)
+
+
+@app.route('/api/user/<int:user_id>/worklog-stats', methods=['GET'])
+def get_workout_stats(user_id):
+    current_year = datetime.now().year
+    current_month = datetime.now().month
+
+    # Determine the number of weeks in the current month
+    # This is a simplistic way to calculate the first and last day of the month
+    first_day = datetime(current_year, current_month, 1)
+    last_day = (first_day + timedelta(days=31)).replace(day=1) - timedelta(days=1)
+
+    # Calculate the week numbers for the first and last day of the month
+    first_week = first_day.isocalendar()[1]
+    last_week = last_day.isocalendar()[1]
+
+    # Query to aggregate worklogs by week of the current month and count them
+    stats = db.session.query(
+        extract('week', Worklog.created_at).label('week'),
+        func.count(Worklog.id).label('count')
+    ).filter(
+        Worklog.user_id == user_id,
+        extract('year', Worklog.created_at) == current_year,
+        extract('month', Worklog.created_at) == current_month
+    ).group_by('week'
+    ).order_by('week').all()
+
+    # Initialize a dictionary with all weeks in the month set to 0 counts
+    week_counts = {week: 0 for week in range(first_week, last_week )}
+
+    # Update the dictionary with actual counts from the query
+    for week, count in stats:
+        # Adjust for edge cases where week numbering might overlap years
+        if week in week_counts:
+            week_counts[week] = count
+
+    # Convert the week counts dictionary to the desired list format
+    stats_data = [
+        {"week": f"Week {week - first_week + 1}", "count": count}
+        for week, count in week_counts.items()
+    ]
+
+    return jsonify(stats_data)
 
 #============== WORKLOG ===================
 
