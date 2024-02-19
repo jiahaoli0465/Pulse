@@ -5,7 +5,7 @@
         <div id="wl-header">
             <div id="wk-titles">
                 <h2>{{worklog.title}}</h2>
-                <h3>By: {{worklog.user.username}}</h3>
+                <h3>By: <a id="userTag" href="/{{worklog.user.username}}">{{worklog.user.username}}</a></h3>
                     <h3>Type: {% for tp in worklog.workout_types %}
                         
                         <b class="typeName">{{tp.type_name}}</b>

@@ -616,3 +616,9 @@ input:hover {
     padding-block: 3px;
     cursor: pointer;
 }
+
+#userTag {
+    display: inline; 
+
+
+}

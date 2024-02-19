@@ -1,61 +1,121 @@
-
-
 #postSection {
     width: 100%;
     max-width: 600px; /* Mimicking Instagram post width */
-    max-height: 100%;
-    margin-top: 50px;
-
-    /* padding-bottom: 20px; */
+    height: 100%;
+    margin-top: 50px; /* Centered with auto margins */
+    padding: 0 20px; /* Padding on the sides for smaller screens */
 }
+
 
 .post {
-    background-color: #262626;
-    border: 1px solid #252525;
+    background-color: #222121;
+    color: #ddd; /* Light text for readability */
+    border: 1px solid #232323; /* Slightly darker border for depth */
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     overflow: hidden;
-    box-shadow: 0 0 8px rgba(0,0,0,0.4); 
-
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5); /* Deeper shadow for contrast */
+    cursor: pointer;
 }
 
-.post-header, .post-content, .post-footer {
+.post:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6); /* Enhanced shadow on hover */
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
     padding: 15px;
+    border-bottom: 1px solid #3a3c40; /* Subtle contrast for separator */
 }
 
-.post-content {
-    border-top: 1px solid #dbdbdb;
-}
+
 
 .profile-pic {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    float: left;
-    margin-right: 10px;
+    object-fit: cover;
+    margin-right: 15px;
 }
 
 .user-details {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
-.user-details strong {
-    display: block;
+.user-link {
+    color: #E37D74; /* Brand color for links */
+    font-weight: 500;
+    text-decoration: none;
+    margin-bottom: 4px;
+}
+
+.user-link:hover {
+    text-decoration: underline;
+    color: #ddd; /* Lighter color on hover for distinction */
 }
 
 .post-date {
-    font-size: 0.8em;
-    color: #8e8e8e;
+    font-size: 0.85em;
+    color: #bbb; /* Subdued color for date */
+}
+.post-title {
+    padding-bottom: 15px;
+
+
+}
+.post-title h3, .typeName {
+    margin: 0;
+    margin-top: 10px;
+    margin-left: 15px;
+    color: #F2F2F2; /* Ensuring high readability */
+    margin-bottom: 8px;
 }
 
-.post-image {
-    width: 100%;
-    height: auto;
-    margin-top: 10px;
+.typeName {
+    background-color: #E37D74; /* Brand accent color for workout types */
+    color: #232323; /* Dark text for contrast */
+    padding: 2px 8px;
+    border-radius: 15px;
+    font-size: 0.85em;
+
+    margin-left: 15px;
+
 }
 
-.post-footer {
-    border-top: 1px solid #dbdbdb;
-    margin-top: 10px;
-    padding-top: 10px;
+.post-content, .post-footer {
+    padding: 15px;
+    border-top: 1px solid #3a3c40; /* Separator */
+}
+
+blockquote {
+    background-color: #333538; /* Darker background for blockquote */
+    border-left: 5px solid #E37D74; /* Accent color for quote line */
+    padding: 10px 20px;
+    color: #ddd; /* Light text for readability */
+    font-style: italic;
+}
+
+.workout-intro {
+    font-weight: bold;
+    color: #E37D74; /* Using brand color for intro text */
+}
+
+.workout-exercises, .exercise-sets {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.exercise-name {
+    font-weight: 600;
+}
+
+.exercise-sets {
+    margin-top: 5px;
+    color: #bbb; /* Subdued color for sets details */
+    font-size: 0.9em;
+}
+.exercise-sets li {
+    margin-left: 20px;
 }
