@@ -84,7 +84,7 @@ def show_profile():
         current_user.image_url = form.image_url.data
         current_user.username = form.username.data
         db.session.commit()
-        return redirect(f'/current_user.username')
+        return redirect(f'/{current_user.username}')
 
 
     return render_template('users/profile.html', user = current_user , form = form)
