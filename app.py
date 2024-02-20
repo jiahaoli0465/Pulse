@@ -19,6 +19,7 @@ app = Flask(__name__)
 app.register_blueprint(assistantbot)
 
 database_url = os.environ.get('DATABASE_URL', 'postgresql:///pulse')
+
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
 
@@ -28,7 +29,7 @@ app.config['SQLALCHEMY_ECHO'] = False
 # app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 
-db = SQLAlchemy(app)
+# db = SQLAlchemy(app)
 toolbar = DebugToolbarExtension(app)
 migrate = Migrate(app, db)
 
