@@ -1,8 +1,11 @@
 # Pulse AI
 
-## Under Construction
+## Beta version is out!
+<img width="1512" alt="Screenshot 2024-02-23 at 3 15 13 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/ef67f576-ea2e-4a4e-a5c9-e8df085a1e49">
+<img width="1512" alt="Screenshot 2024-02-23 at 3 15 23 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/a010a653-1301-4c4a-9875-36bd1e125011">
 
-**Please note:** This project is currently under development. Features and documentation are in the process of being developed and finalized.
+
+
 <img width="1512" alt="image" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/7bf4620a-6af6-4d18-a45a-cb80b19fb628">
 
 <img width="1511" alt="image" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/d6dce56f-540c-43bf-8e34-b755e4feac26">
@@ -10,7 +13,7 @@
 <img width="1512" alt="image" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/7c049c86-b94f-493e-ae78-9086137a3984">
 
 
-<img width="1512" alt="Screenshot 2024-01-02 at 4 25 47 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/375363a1-40e5-4c5b-8ab8-bc6be6a53785">
+
 <img width="1508" alt="Screenshot 2024-01-02 at 4 23 55 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/07802501-a97c-4a67-9758-f3920e129d58">
 <img width="1512" alt="Screenshot 2024-01-02 at 4 24 49 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/6d9060ce-23f3-41e0-99c6-4e6d8ccb73bc">
 
