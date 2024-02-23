@@ -13,7 +13,7 @@
 <img width="1512" alt="Screenshot 2024-01-02 at 4 25 47 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/375363a1-40e5-4c5b-8ab8-bc6be6a53785">
 <img width="1508" alt="Screenshot 2024-01-02 at 4 23 55 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/07802501-a97c-4a67-9758-f3920e129d58">
 <img width="1512" alt="Screenshot 2024-01-02 at 4 24 49 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/6d9060ce-23f3-41e0-99c6-4e6d8ccb73bc">
-<img width="1512" alt="Screenshot 2024-01-02 at 4 25 01 AM" src="https://github.com/jiahaoli0465/Pulse/assets/144624616/62c1ca86-a972-4192-b606-18c6a5bde9b3">
+
 
 
 
