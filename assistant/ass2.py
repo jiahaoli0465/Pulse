@@ -24,13 +24,7 @@ def reset_thread():
     new_thread = client.beta.threads.create()
     session['thread_id'] = new_thread.id
    
-@ass2.route('/chatbot')
-def show_home():
-    # Start a new thread for each user session
-    if 'thread_id' not in session:
-        thread = client.beta.threads.create()
-        session['thread_id'] = thread.id
-    return render_template('/gpt/index.html')
+
 
 @ass2.route('/resume', methods=['POST'])
 def chat():
