@@ -5,7 +5,7 @@ import openai
 import os
 import json
 
-assistantbot = Blueprint('assistantbot', __name__,
+ass2 = Blueprint('ass2', __name__,
                         template_folder='templates')
 
 # Initialize the OpenAI client
@@ -24,7 +24,7 @@ def reset_thread():
     new_thread = client.beta.threads.create()
     session['thread_id'] = new_thread.id
    
-@assistantbot.route('/chatbot')
+@ass2.route('/chatbot')
 def show_home():
     # Start a new thread for each user session
     if 'thread_id' not in session:
@@ -32,7 +32,7 @@ def show_home():
         session['thread_id'] = thread.id
     return render_template('/gpt/index.html')
 
-@assistantbot.route('/resume', methods=['POST'])
+@ass2.route('/resume', methods=['POST'])
 def chat():
 
     if 'thread_id_resume' not in session:
@@ -92,5 +92,5 @@ def chat():
 
 
 if __name__ == '__main__':
-    assistantbot.secret_key = os.urandom(24)
-    assistantbot.run(debug=True)
+    ass2.secret_key = os.urandom(24)
+    ass2.run(debug=True)

@@ -14,9 +14,12 @@ from forms import RegisterForm, LoginForm, EditWorkLog, NewExercise, NewWorkLog,
 from models import db, connect_db, User, Worklog, WorkoutType, Exercise, ExerciseSet, WorkoutExercise, Post
 
 from assistant.assistant import assistantbot, client
+from assistant.ass2 import ass2
 
 app = Flask(__name__)
 app.register_blueprint(assistantbot)
+app.register_blueprint(ass2)
+
 
 database_url = os.environ.get('DATABASE_URL', 'postgresql:///pulse')
 
